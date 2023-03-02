@@ -45,11 +45,6 @@ export default class EffectDefinitions {
       this._concentrating,
       this._dead,
       this._deafened,
-      this._exhaustion1,
-      this._exhaustion2,
-      this._exhaustion3,
-      this._exhaustion4,
-      this._exhaustion5,
       this._frightened,
       this._grappled,
       this._incapacitated,
@@ -247,10 +242,10 @@ export default class EffectDefinitions {
   /* Condition Effects */
   get _blinded() {
     return createActiveEffect({
-      label: 'Blinded',
+      name: game.i18n.localize('DND5E.ConBlinded'),
       description:
         "- A blinded creature can't see and automatically fails any ability check that requires sight.<br/>- Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage.",
-      icon: 'modules/dfreds-convenient-effects/images/blinded.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/blinded.svg',
       changes: [
         {
           key: `flags.${this._flagPrefix}.disadvantage.attack.all`,
@@ -268,25 +263,25 @@ export default class EffectDefinitions {
 
   get _charmed() {
     return createActiveEffect({
-      label: 'Charmed',
+      name: game.i18n.localize('DND5E.ConCharmed'),
       description:
         "- A charmed creature can't attack the charmer or target the charmer with harmful abilities or magical effects.<br/>- The charmer has advantage on any ability check to interact socially with the creature.",
-      icon: 'modules/dfreds-convenient-effects/images/charmed.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/charmed.svg',
     });
   }
 
   get _concentrating() {
     return createActiveEffect({
-      label: 'Concentrating',
+      name: 'Concentré',
       description:
         'Some Spells require you to maintain Concentration in order to keep their magic active. If you lose Concentration, such a spell ends.',
-      icon: 'modules/dfreds-convenient-effects/images/concentrating.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/concentrating.svg',
     });
   }
 
   get _dead() {
     return createActiveEffect({
-      label: 'Dead',
+      name: 'Mort',
       description: 'No active effects',
       icon: 'icons/svg/skull.svg',
     });
@@ -294,18 +289,18 @@ export default class EffectDefinitions {
 
   get _deafened() {
     return createActiveEffect({
-      label: 'Deafened',
+      name: game.i18n.localize('DND5E.ConDeafened'),
       description:
         "- A deafened creature can't hear and automatically fails any ability check that requires hearing.",
-      icon: 'modules/dfreds-convenient-effects/images/deafened.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/deafened.svg',
     });
   }
 
   get _exhaustion1() {
     return createActiveEffect({
-      label: 'Exhaustion 1',
+      name: game.i18n.localize('DND5E.ConExhaustion') + ' 1',
       description: 'Disadvantage on ability checks',
-      icon: 'modules/dfreds-convenient-effects/images/exhaustion1.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/exhaustion1.svg',
       changes: [
         {
           key: 'system.attributes.exhaustion',
@@ -328,9 +323,9 @@ export default class EffectDefinitions {
 
   get _exhaustion2() {
     return createActiveEffect({
-      label: 'Exhaustion 2',
+      name: game.i18n.localize('DND5E.ConExhaustion') + ' 2',
       description: 'Disadvantage on ability checks and speed halved',
-      icon: 'modules/dfreds-convenient-effects/images/exhaustion2.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/exhaustion2.svg',
       changes: [
         {
           key: 'system.attributes.exhaustion',
@@ -359,10 +354,10 @@ export default class EffectDefinitions {
 
   get _exhaustion3() {
     return createActiveEffect({
-      label: 'Exhaustion 3',
+      name: game.i18n.localize('DND5E.ConExhaustion') + ' 3',
       description:
         'Disadvantage on ability checks, speed halved, and disadvantage on attacks and saving throws',
-      icon: 'modules/dfreds-convenient-effects/images/exhaustion3.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/exhaustion3.svg',
       changes: [
         {
           key: 'system.attributes.exhaustion',
@@ -401,10 +396,10 @@ export default class EffectDefinitions {
 
   get _exhaustion4() {
     return createActiveEffect({
-      label: 'Exhaustion 4',
+      name: game.i18n.localize('DND5E.ConExhaustion') + ' 4',
       description:
         'Disadvantage on ability checks, speed halved, disadvantage on attacks and saving throws, and hit point maximum halved',
-      icon: 'modules/dfreds-convenient-effects/images/exhaustion4.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/exhaustion4.svg',
       changes: [
         {
           key: 'system.attributes.exhaustion',
@@ -449,10 +444,10 @@ export default class EffectDefinitions {
 
   get _exhaustion5() {
     return createActiveEffect({
-      label: 'Exhaustion 5',
+      name: game.i18n.localize('DND5E.ConExhaustion') + ' 5',
       description:
         'Disadvantage on ability checks, speed reduced to 0, disadvantage on attacks and saving throws, and hit point maximum halved',
-      icon: 'modules/dfreds-convenient-effects/images/exhaustion5.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/exhaustion5.svg',
       changes: [
         {
           key: 'system.attributes.exhaustion',
@@ -497,10 +492,10 @@ export default class EffectDefinitions {
 
   get _frightened() {
     return createActiveEffect({
-      label: 'Frightened',
+      name: game.i18n.localize('DND5E.ConFrightened'),
       description:
         "- A frightened creature has disadvantage on ability checks and attack rolls while the source of its fear is within line of sight.<br/>- The creature can't willingly move closer to the source of its fear.",
-      icon: 'modules/dfreds-convenient-effects/images/frightened.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/frightened.svg',
       changes: [
         {
           key: `flags.${this._flagPrefix}.disadvantage.attack.all`,
@@ -518,10 +513,10 @@ export default class EffectDefinitions {
 
   get _grappled() {
     return createActiveEffect({
-      label: 'Grappled',
+      name: game.i18n.localize('DND5E.ConGrappled'),
       description:
         "- A grappled creature's speed becomes 0, and it can't benefit from any bonus to its speed.<br/>- The condition ends if the grappler is incapacitated.<br/>- The condition also ends if an effect removes the grappled creature from the reach of the grappler or grappling effect.",
-      icon: 'modules/dfreds-convenient-effects/images/grappled.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/grappled.svg',
       changes: [
         {
           key: 'system.attributes.movement.all',
@@ -535,19 +530,19 @@ export default class EffectDefinitions {
 
   get _incapacitated() {
     return createActiveEffect({
-      label: 'Incapacitated',
+      name: game.i18n.localize('DND5E.ConIncapacitated'),
       description:
         "- An incapacitated creature can't take actions or reactions",
-      icon: 'modules/dfreds-convenient-effects/images/incapacitated.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/incapacitated.svg',
     });
   }
 
   get _invisible() {
     return createActiveEffect({
-      label: 'Invisible',
+      name: game.i18n.localize('DND5E.ConInvisible'),
       description:
         "- An invisible creature is impossible to see without the aid of magic or a special sense. For the purpose of hiding, the creature is heavily obscured. The creature's location can be detected by any noise it makes or any tracks it leaves.<br/>- Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage.",
-      icon: 'modules/dfreds-convenient-effects/images/invisible.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/invisible.svg',
       changes: [
         {
           key: `flags.${this._flagPrefix}.advantage.attack.all`,
@@ -565,10 +560,10 @@ export default class EffectDefinitions {
 
   get _paralyzed() {
     return createActiveEffect({
-      label: 'Paralyzed',
+      name: game.i18n.localize('DND5E.ConParalyzed'),
       description:
         "- A paralyzed creature is incapacitated (see the condition) and can't move or speak.<br/>- The creature automatically fails Strength and Dexterity saving throws. Attack rolls against the creature have advantage.<br/>- Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature.",
-      icon: 'modules/dfreds-convenient-effects/images/paralyzed.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/paralyzed.svg',
       changes: [
         {
           key: `flags.${this._flagPrefix}.fail.ability.save.dex`,
@@ -602,10 +597,10 @@ export default class EffectDefinitions {
 
   get _petrified() {
     return createActiveEffect({
-      label: 'Petrified',
+      name: game.i18n.localize('DND5E.ConPetrified'),
       description:
         "- A petrified creature is transformed, along with any nonmagical object it is wearing or carrying, into a solid inanimate substance (usually stone). Its weight increases by a factor of ten, and it ceases aging.<br/>- The creature is incapacitated (see the condition), can't move or speak, and is unaware of its surroundings.<br/>- Attack rolls against the creature have advantage.<br/>- The creature automatically fails Strength and Dexterity saving throws.<br/>- The creature has resistance to all damage.<br/>- The creature is immune to poison and disease, although a poison or disease already in its system is suspended, not neutralized. Remove all movement, grant advantage to all who attack, and add damage resistance to all magical and physical attacks",
-      icon: 'modules/dfreds-convenient-effects/images/petrified.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/petrified.svg',
       changes: [
         {
           key: `flags.${this._flagPrefix}.grants.advantage.attack.all`,
@@ -649,10 +644,10 @@ export default class EffectDefinitions {
 
   get _poisoned() {
     return createActiveEffect({
-      label: 'Poisoned',
+      name: game.i18n.localize('DND5E.ConPoisoned'),
       description:
         '- A poisoned creature has disadvantage on attack rolls and ability checks.',
-      icon: 'modules/dfreds-convenient-effects/images/poisoned.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/poisoned.svg',
       changes: [
         {
           key: `flags.${this._flagPrefix}.disadvantage.attack.all`,
@@ -670,10 +665,10 @@ export default class EffectDefinitions {
 
   get _prone() {
     return createActiveEffect({
-      label: 'Prone',
+      name: game.i18n.localize('DND5E.ConProne'),
       description:
         "- A prone creature's only movement option is to crawl, unless it stands up and thereby ends the condition.<br/>- The creature has disadvantage on attack rolls.<br/>- An attack roll against the creature has advantage if the attacker is within 5 feet of the creature. Otherwise, the attack roll has disadvantage.",
-      icon: 'modules/dfreds-convenient-effects/images/prone.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/prone.svg',
       changes: [
         {
           key: `flags.${this._flagPrefix}.grants.advantage.attack.mwak`,
@@ -712,10 +707,10 @@ export default class EffectDefinitions {
 
   get _restrained() {
     return createActiveEffect({
-      label: 'Restrained',
+      name: game.i18n.localize('DND5E.ConRestrained'),
       description:
         "- A restrained creature's speed becomes 0, and it can't benefit from any bonus to its speed.<br/>- Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage.<br/>- The creature has disadvantage on Dexterity saving throws.",
-      icon: 'modules/dfreds-convenient-effects/images/restrained.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/restrained.svg',
       changes: [
         {
           key: `flags.${this._flagPrefix}.disadvantage.ability.save.dex`,
@@ -744,10 +739,10 @@ export default class EffectDefinitions {
 
   get _stunned() {
     return createActiveEffect({
-      label: 'Stunned',
+      name: game.i18n.localize('DND5E.ConStunned'),
       description:
         "- A stunned creature is incapacitated (see the condition), can't move, and can speak only falteringly.<br/>- The creature automatically fails Strength and Dexterity saving throws.<br/>- Attack rolls against the creature have advantage.",
-      icon: 'modules/dfreds-convenient-effects/images/stunned.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/stunned.svg',
       changes: [
         {
           key: `flags.${this._flagPrefix}.fail.ability.save.dex`,
@@ -770,7 +765,7 @@ export default class EffectDefinitions {
 
   get _unconscious() {
     return createActiveEffect({
-      label: 'Unconscious',
+      name: game.i18n.localize('DND5E.ConUnconscious'),
       description:
         "- An unconscious creature is incapacitated (See the condition) can't move or speak, and is unaware of its surroundings.<br/>- The creature drops whatever its holding and falls prone (See the condition).<br/>- The creature automatically fails Strength and Dexterity saving throws.<br/>- Attack rolls against the creature have advantage.<br/>- Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature.",
       icon: 'icons/svg/unconscious.svg',
@@ -780,9 +775,9 @@ export default class EffectDefinitions {
 
   get _wounded() {
     return createActiveEffect({
-      label: 'Wounded',
+      name: 'Blessé',
       description: 'No active effects',
-      icon: 'modules/dfreds-convenient-effects/images/wounded.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/wounded.svg',
     });
   }
 
@@ -3320,7 +3315,7 @@ export default class EffectDefinitions {
     return createActiveEffect({
       label: 'Bonus Action',
       description: 'No active effects and expires on turn start',
-      icon: 'modules/dfreds-convenient-effects/images/bonus-action.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/bonus-action.svg',
       flags: {
         dae: {
           specialDuration: ['turnStart', 'shortRest', 'longRest'],
@@ -3333,7 +3328,7 @@ export default class EffectDefinitions {
     return createActiveEffect({
       label: 'Cover (Half)',
       description: 'Adds 2 to AC and dexterity saving throws',
-      icon: 'modules/dfreds-convenient-effects/images/broken-wall.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/broken-wall.svg',
       changes: [
         {
           key: 'system.attributes.ac.cover',
@@ -3353,7 +3348,7 @@ export default class EffectDefinitions {
     return createActiveEffect({
       label: 'Cover (Three-Quarters)',
       description: 'Adds 5 to AC and dexterity saving throws',
-      icon: 'modules/dfreds-convenient-effects/images/brick-wall.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/brick-wall.svg',
       changes: [
         {
           key: 'system.attributes.ac.cover',
@@ -3390,7 +3385,7 @@ export default class EffectDefinitions {
       label: 'Dodge',
       description:
         'Grants disadvantage to all who attack and advantage on all dexterity saving throws until next turn',
-      icon: 'modules/dfreds-convenient-effects/images/dodging.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/dodging.svg',
       flags: {
         dae: {
           specialDuration: ['turnStart'],
@@ -3415,7 +3410,7 @@ export default class EffectDefinitions {
     return createActiveEffect({
       label: 'Flanked',
       description: 'Grants advantage to all who melee attack',
-      icon: 'modules/dfreds-convenient-effects/images/encirclement.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/encirclement.svg',
       changes: [
         {
           key: `flags.${this._flagPrefix}.grants.advantage.attack.mwak`,
@@ -3533,7 +3528,7 @@ export default class EffectDefinitions {
     return createActiveEffect({
       label: 'Ranged Disadvantage',
       description: 'Disadvantage on ranged attack rolls',
-      icon: 'modules/dfreds-convenient-effects/images/broken-arrow.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/broken-arrow.svg',
       changes: [
         {
           key: `flags.${this._flagPrefix}.disadvantage.attack.rwak`,
@@ -3553,7 +3548,7 @@ export default class EffectDefinitions {
     return createActiveEffect({
       label: 'Reaction',
       description: 'No active effects and expires on turn start',
-      icon: 'modules/dfreds-convenient-effects/images/reaction.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/reaction.svg',
       flags: {
         dae: {
           specialDuration: ['turnStart', 'shortRest', 'longRest'],
@@ -3566,7 +3561,7 @@ export default class EffectDefinitions {
     return createActiveEffect({
       label: 'Ready',
       description: 'No active effects and expires on turn start',
-      icon: 'modules/dfreds-convenient-effects/images/ready.svg',
+      icon: 'modules/foundryvtt-convenient-effects-nolat/images/ready.svg',
       flags: {
         dae: {
           specialDuration: ['turnStart'],

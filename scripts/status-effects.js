@@ -17,26 +17,26 @@ export default class StatusEffects {
     const modifyStatusEffects = this._settings.modifyStatusEffects;
 
     if (modifyStatusEffects === 'replace') {
-      CONFIG.Combat.defeatedStatusId = 'Convenient Effect: Dead';
+      CONFIG.Combat.defeatedStatusId = 'Convenient Effect: Mort';
       CONFIG.statusEffects = this._fetchStatusEffects();
 
       if (CONFIG.specialStatusEffects) {
         CONFIG.specialStatusEffects = {
-          DEFEATED: 'Convenient Effect: Dead',
+          DEFEATED: 'Convenient Effect: Mort',
           INVISIBLE: 'Convenient Effect: Invisible',
-          BLIND: 'Convenient Effect: Blinded',
+          BLIND: 'Convenient Effect: Aveuglé',
         };
       }
     } else if (modifyStatusEffects === 'add') {
-      CONFIG.Combat.defeatedStatusId = 'Convenient Effect: Dead';
+      CONFIG.Combat.defeatedStatusId = 'Convenient Effect: Mort';
       CONFIG.statusEffects = CONFIG.statusEffects.concat(
         this._fetchStatusEffects()
       );
       if (CONFIG.specialStatusEffects) {
         CONFIG.specialStatusEffects = {
-          DEFEATED: 'Convenient Effect: Dead',
+          DEFEATED: 'Convenient Effect: Mort',
           INVISIBLE: 'Convenient Effect: Invisible',
-          BLIND: 'Convenient Effect: Blinded',
+          BLIND: 'Convenient Effect: Aveuglé',
         };
       }
     }
