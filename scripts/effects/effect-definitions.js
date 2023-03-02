@@ -57,7 +57,7 @@ export default class EffectDefinitions {
       this._stunned,
       this._unconscious,
       this._wounded,
-    ];
+    ].sort((a, b) => a.name.localeCompare(b.name));
   }
 
   /**
@@ -175,7 +175,7 @@ export default class EffectDefinitions {
       this._wardingBond,
       this._waterBreathing,
       this._waterWalk,
-    ];
+    ].sort((a, b) => a.name.localeCompare(b.name));
   }
 
   /**
@@ -202,7 +202,7 @@ export default class EffectDefinitions {
       this._kiPatientDefense,
       this._rage,
       this._recklessAttack,
-    ];
+    ].sort((a, b) => a.name.localeCompare(b.name));
   }
 
   /**
@@ -217,7 +217,7 @@ export default class EffectDefinitions {
       this._hoodedLantern,
       this._lantern,
       this._torch,
-    ];
+    ].sort((a, b) => a.name.localeCompare(b.name));
   }
 
   /**
@@ -241,7 +241,7 @@ export default class EffectDefinitions {
       // this._reaction,
       this._ready,
       // this._sharpshooter,
-    ];
+    ].sort((a, b) => a.name.localeCompare(b.name));
   }
 
   /* Condition Effects */
@@ -789,7 +789,7 @@ export default class EffectDefinitions {
   /* Spell Effects */
   get _acidArrow() {
     return createActiveEffect({
-      label: 'Acid Arrow',
+      name: 'Flèche acide',
       description: 'Causes 2d4 acid damage at the end of next turn',
       icon: 'icons/magic/acid/projectile-bolts-salvo-green.webp',
       changes: [
@@ -805,8 +805,8 @@ export default class EffectDefinitions {
 
   get _aid() {
     return createActiveEffect({
-      label: 'Aid',
-      description: 'Add to current and maximum hit points for 8 hours',
+      name: 'Aide',
+      description: 'Add 5 to current and maximum hit points for 8 hours',
       icon: 'icons/magic/life/heart-cross-blue.webp',
       seconds: Constants.SECONDS.IN_EIGHT_HOURS,
     });
@@ -814,7 +814,7 @@ export default class EffectDefinitions {
 
   get _alterSelf() {
     return createActiveEffect({
-      label: 'Alter Self',
+      name: "Modification d'apparence",
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/magic/control/debuff-energy-hold-green.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -823,7 +823,7 @@ export default class EffectDefinitions {
 
   get _antilifeShell() {
     return createActiveEffect({
-      label: 'Antilife Shell',
+      name: 'Coquille antivie',
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-teal.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -832,7 +832,7 @@ export default class EffectDefinitions {
 
   get _arcaneHand() {
     return createActiveEffect({
-      label: 'Arcane Hand',
+      name: "Main d'arcane",
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/fire/projectile-fireball-smoke-strong-teal.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -841,7 +841,7 @@ export default class EffectDefinitions {
 
   get _bane() {
     return createActiveEffect({
-      label: 'Bane',
+      name: 'Fléau',
       description:
         'Subtract 1d4 from all saving throws and attack rolls for 1 minute',
       icon: 'icons/magic/unholy/strike-beam-blood-red-purple.webp',
@@ -879,7 +879,7 @@ export default class EffectDefinitions {
   get _barkskin() {
     // TODO token magic effects
     return createActiveEffect({
-      label: 'Barkskin',
+      name: "Peau d'écorce",
       description: 'Upgrade AC to 16 for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-orange.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -896,7 +896,7 @@ export default class EffectDefinitions {
 
   get _beaconOfHope() {
     return createActiveEffect({
-      label: 'Beacon of Hope',
+      name: "Lueur d'espoir",
       description:
         'Adds advantage to wisdom saving throws and death saving throws for 1 minute',
       icon: 'icons/magic/light/explosion-star-large-blue-yellow.webp',
@@ -918,7 +918,7 @@ export default class EffectDefinitions {
 
   get _blackTentacles() {
     return createActiveEffect({
-      label: 'Black Tentacles',
+      name: 'Tentacules noirs',
       description: 'Apply the effects of the restrained condition for 1 minute',
       icon: 'icons/magic/nature/vines-thorned-curled-glow-teal-purple.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -928,7 +928,7 @@ export default class EffectDefinitions {
 
   get _bless() {
     return createActiveEffect({
-      label: 'Bless',
+      name: 'Bénédiction',
       description: 'Add 1d4 to all saving throws and attack rolls for 1 minute',
       icon: 'icons/magic/control/buff-flight-wings-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -971,7 +971,7 @@ export default class EffectDefinitions {
 
   get _blindnessDeafness() {
     return createActiveEffect({
-      label: 'Blindness/Deafness',
+      name: 'Cécité/Surdité',
       description: 'Choose between blindness or deafness',
       icon: 'icons/magic/perception/eye-ringed-glow-angry-red.webp',
       nestedEffects: [
@@ -983,7 +983,7 @@ export default class EffectDefinitions {
 
   get _blindnessDeafnessBlindness() {
     return createActiveEffect({
-      label: 'Blindness',
+      name: 'Cécité',
       description:
         'Disadvantage on attack rolls while granting advantage to all who attack for 1 minute',
       icon: 'icons/magic/perception/eye-ringed-glow-angry-red.webp',
@@ -995,7 +995,7 @@ export default class EffectDefinitions {
 
   get _blindnessDeafnessDeafness() {
     return createActiveEffect({
-      label: 'Deafness',
+      name: 'Surdité',
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/perception/eye-ringed-glow-angry-red.webp',
       isViewable: this._settings.showNestedEffects,
@@ -1006,7 +1006,7 @@ export default class EffectDefinitions {
 
   get _blur() {
     return createActiveEffect({
-      label: 'Blur',
+      name: 'Flou',
       description: 'Grants disadvantage to all who attack for 1 minute',
       icon: 'icons/magic/air/air-burst-spiral-blue-gray.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1029,7 +1029,7 @@ export default class EffectDefinitions {
 
   get _charmPerson() {
     return createActiveEffect({
-      label: 'Charm Person',
+      name: 'Charme-personne',
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/magic/fire/explosion-fireball-medium-purple-pink.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -1039,7 +1039,7 @@ export default class EffectDefinitions {
 
   get _command() {
     return createActiveEffect({
-      label: 'Command',
+      name: 'Injonction',
       description: 'No active effects and lasts until the end of next turn',
       icon: 'icons/magic/fire/explosion-fireball-small-purple.webp',
       seconds: CONFIG.time.roundTime,
@@ -1049,7 +1049,7 @@ export default class EffectDefinitions {
 
   get _comprehendLanguages() {
     return createActiveEffect({
-      label: 'Comprehend Languages',
+      name: 'Compréhension des langues',
       description: 'Adds all languages for 1 hour',
       icon: 'icons/magic/symbols/runes-triangle-orange-purple.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -1082,7 +1082,7 @@ export default class EffectDefinitions {
 
   get _contagionBlindingSickness() {
     return createActiveEffect({
-      label: 'Blinding Sickness',
+      name: 'Bouille-crâne',
       description:
         'Disadvantage on wisdom checks and wisdom saving throws for 7 days',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1106,7 +1106,7 @@ export default class EffectDefinitions {
 
   get _contagionFilthFever() {
     return createActiveEffect({
-      label: 'Filth Fever',
+      name: 'Convulsions',
       description:
         'Disadvantage on strength checks strength saving throws, and attacks that use strength for 7 days',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1134,7 +1134,7 @@ export default class EffectDefinitions {
 
   get _contagionFleshRot() {
     return createActiveEffect({
-      label: 'Flesh Rot',
+      name: 'Fièvre répugnante',
       description:
         'Disadvantage on charisma checks and vulnerability to all damage',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1157,7 +1157,7 @@ export default class EffectDefinitions {
 
   get _contagionMindfire() {
     return createActiveEffect({
-      label: 'Mindfire',
+      name: 'Mal aveuglant',
       description:
         'Disadvantage on intelligence checks and intelligence saving throws for 7 days',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1180,7 +1180,7 @@ export default class EffectDefinitions {
 
   get _contagionSeizure() {
     return createActiveEffect({
-      label: 'Seizure',
+      name: 'Mort poisseuse',
       description:
         'Disadvantage on dexterity checks, dexterity saving throws, and attacks that use dexterity for 7 days',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1208,7 +1208,7 @@ export default class EffectDefinitions {
 
   get _contagionSlimyDoom() {
     return createActiveEffect({
-      label: 'Slimy Doom',
+      name: 'Pourriture',
       description:
         'Disadvantage on constitution checks and constitution saving throws for 7 days',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1231,7 +1231,7 @@ export default class EffectDefinitions {
 
   get _darkvision() {
     return createActiveEffect({
-      label: 'Darkvision',
+      name: 'Vision dans le noir',
       description: 'Upgrade darkvision to 60 ft. for 8 hours',
       icon: 'icons/magic/perception/eye-ringed-glow-angry-small-red.webp',
       seconds: Constants.SECONDS.IN_EIGHT_HOURS,
@@ -1262,7 +1262,7 @@ export default class EffectDefinitions {
 
   get _disguiseSelf() {
     return createActiveEffect({
-      label: 'Disguise Self',
+      name: 'Déguisement',
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/magic/control/debuff-energy-hold-teal-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -1271,7 +1271,7 @@ export default class EffectDefinitions {
 
   get _divineFavor() {
     return createActiveEffect({
-      label: 'Divine Favor',
+      name: 'Faveur divine',
       description: 'Add 1d4 radiant damage to weapon attacks for 1 minute',
       icon: 'icons/magic/fire/dagger-rune-enchant-flame-blue-yellow.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1287,7 +1287,7 @@ export default class EffectDefinitions {
 
   get _divineWord() {
     return createActiveEffect({
-      label: 'Divine Word',
+      name: 'Parole divine',
       description: 'Adds various effects based on the remaining hit points',
       icon: 'icons/magic/light/explosion-star-large-orange-purple.webp',
       isDynamic: true,
@@ -1296,7 +1296,7 @@ export default class EffectDefinitions {
 
   get _enhanceAbility() {
     return createActiveEffect({
-      label: 'Enhance Ability',
+      name: 'Amélioration de caractéristique',
       description:
         "Choose between Bear's Endurance, Bull's Strength, Cat's Grace, Eagle's Splendor, Fox's Cunning, or Owl's Wisdom",
       icon: 'icons/magic/control/buff-flight-wings-runes-purple.webp',
@@ -1313,7 +1313,7 @@ export default class EffectDefinitions {
 
   get _enhanceAbilityBearsEndurance() {
     return createActiveEffect({
-      label: "Bear's Endurance",
+      name: "Endurance de l'ours",
       description:
         'Advantage on constitution checks and 2d6 temp hit points for 1 hour',
       icon: 'icons/magic/control/buff-flight-wings-runes-purple.webp',
@@ -1331,7 +1331,7 @@ export default class EffectDefinitions {
 
   get _enhanceAbilityBullsStrength() {
     return createActiveEffect({
-      label: "Bull's Strength",
+      name: 'Force du taureau',
       description:
         'Advantage on strength checks and double maximum carrying capacity for 1 hour',
       icon: 'icons/magic/control/buff-flight-wings-runes-purple.webp',
@@ -1355,7 +1355,7 @@ export default class EffectDefinitions {
 
   get _enhanceAbilityCatsGrace() {
     return createActiveEffect({
-      label: "Cat's Grace",
+      name: 'Grâce féline',
       description: 'Advantage on dexterity checks for 1 hour',
       icon: 'icons/magic/control/buff-flight-wings-runes-purple.webp',
       isViewable: this._settings.showNestedEffects,
@@ -1372,7 +1372,7 @@ export default class EffectDefinitions {
 
   get _enhanceAbilityEaglesSplendor() {
     return createActiveEffect({
-      label: "Eagle's Splendor",
+      name: "Splendeur de l'aigle",
       description: 'Advantage on charisma checks for 1 hour',
       icon: 'icons/magic/control/buff-flight-wings-runes-purple.webp',
       isViewable: this._settings.showNestedEffects,
@@ -1389,7 +1389,7 @@ export default class EffectDefinitions {
 
   get _enhanceAbilityFoxsCunning() {
     return createActiveEffect({
-      label: "Fox's Cunning",
+      name: 'Ruse du renard',
       description: 'Advantage on intelligence checks for 1 hour',
       icon: 'icons/magic/control/buff-flight-wings-runes-purple.webp',
       isViewable: this._settings.showNestedEffects,
@@ -1406,7 +1406,7 @@ export default class EffectDefinitions {
 
   get _enhanceAbilityOwlsWisdom() {
     return createActiveEffect({
-      label: "Owl's Wisdom",
+      name: 'Sagesse du hibou',
       description: 'Advantage on wisdom checks for 1 hour',
       icon: 'icons/magic/control/buff-flight-wings-runes-purple.webp',
       isViewable: this._settings.showNestedEffects,
@@ -1423,7 +1423,7 @@ export default class EffectDefinitions {
 
   get _enlargeReduce() {
     return createActiveEffect({
-      label: 'Enlarge/Reduce',
+      name: 'Agrandissement/Rapetissement',
       description: 'Choose between Enlarge or Reduce',
       icon: 'icons/magic/control/energy-stream-link-large-blue.webp',
       nestedEffects: [
@@ -1435,7 +1435,7 @@ export default class EffectDefinitions {
 
   get _enlargeReduceEnlarge() {
     return createActiveEffect({
-      label: 'Enlarge',
+      name: 'Agrandissement',
       description:
         'Add 1d4 to damage and advantage on strength checks and strength saving throws for 1 minute',
       icon: 'icons/magic/control/energy-stream-link-large-blue.webp',
@@ -1464,7 +1464,7 @@ export default class EffectDefinitions {
 
   get _enlargeReduceReduce() {
     return createActiveEffect({
-      label: 'Reduce',
+      name: 'Rapetissement',
       description:
         'Subtract 1d4 from damage and disadvantage on strength checks and strength saving throws for 1 minute',
       icon: 'icons/magic/control/energy-stream-link-large-blue.webp',
@@ -1493,7 +1493,7 @@ export default class EffectDefinitions {
 
   get _faerieFire() {
     return createActiveEffect({
-      label: 'Faerie Fire',
+      name: 'Lueurs féeriques',
       description: 'Grants advantage to all who attack for 1 minute',
       icon: 'icons/magic/fire/projectile-meteor-salvo-strong-teal.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1538,8 +1538,9 @@ export default class EffectDefinitions {
 
   get _falseLife() {
     return createActiveEffect({
-      label: 'False Life',
-      description: 'Add temporary hit points 1 hour',
+      name: 'Simulacre de vie',
+      description:
+        'Add 1d4 + 4 temp hit points (rolled automatically) for 1 hour',
       icon: 'icons/magic/life/heart-cross-purple-orange.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
     });
@@ -1547,7 +1548,7 @@ export default class EffectDefinitions {
 
   get _featherFall() {
     return createActiveEffect({
-      label: 'Feather Fall',
+      name: 'Feuille morte',
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/air/wind-swirl-pink-purple.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1556,7 +1557,7 @@ export default class EffectDefinitions {
 
   get _feeblemind() {
     return createActiveEffect({
-      label: 'Feeblemind',
+      name: 'Esprit faible',
       description: 'Set intelligence and charisma scores to 1 until removed',
       icon: 'icons/magic/light/explosion-star-large-teal-purple.webp',
       changes: [
@@ -1578,7 +1579,7 @@ export default class EffectDefinitions {
 
   get _fireShield() {
     return createActiveEffect({
-      label: 'Fire Shield',
+      name: 'Bouclier de feu',
       description: 'Choose between cold or fire resistance',
       icon: 'icons/magic/defensive/shield-barrier-flaming-pentagon-red.webp',
       nestedEffects: [
@@ -1590,7 +1591,7 @@ export default class EffectDefinitions {
 
   get _fireShieldColdResistance() {
     return createActiveEffect({
-      label: 'Fire Shield (Cold Resistance)',
+      name: 'Bouclier de feu (Résistance au froid)',
       description: 'Add damage resistance to cold for 10 minutes',
       icon: 'icons/magic/defensive/shield-barrier-flaming-pentagon-red.webp',
       isViewable: this._settings.showNestedEffects,
@@ -1641,7 +1642,7 @@ export default class EffectDefinitions {
 
   get _fireShieldFireResistance() {
     return createActiveEffect({
-      label: 'Fire Shield (Fire Resistance)',
+      name: 'Bouclier de feu (Résistance au feu)',
       description: 'Add damage resistance to fire for 10 minutes',
       icon: 'icons/magic/defensive/shield-barrier-flaming-pentagon-blue.webp',
       isViewable: this._settings.showNestedEffects,
@@ -1692,7 +1693,7 @@ export default class EffectDefinitions {
 
   get _findThePath() {
     return createActiveEffect({
-      label: 'Find the Path',
+      name: 'Orientation',
       description: 'No active effects and lasts for 1 day',
       icon: 'icons/magic/light/explosion-star-teal.webp',
       seconds: Constants.SECONDS.IN_ONE_DAY,
@@ -1701,7 +1702,7 @@ export default class EffectDefinitions {
 
   get _fly() {
     return createActiveEffect({
-      label: 'Fly',
+      name: 'Vol',
       description: 'Upgrade flying speed to 60 ft. for 10 minutes',
       icon: 'icons/magic/control/energy-stream-link-white.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -1718,7 +1719,7 @@ export default class EffectDefinitions {
 
   get _foresight() {
     return createActiveEffect({
-      label: 'Foresight',
+      name: 'Prémonition',
       description:
         'Grants advantage on attack rolls, ability checks, and saving throws while granting disadvantage to all who attack for 8 hours',
       icon: 'icons/magic/perception/eye-ringed-glow-angry-large-teal.webp',
@@ -1755,7 +1756,7 @@ export default class EffectDefinitions {
 
   get _freedomOfMovement() {
     return createActiveEffect({
-      label: 'Freedom of Movement',
+      name: 'Liberté de mouvement',
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/skills/melee/strike-blade-knife-white-red.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -1764,7 +1765,7 @@ export default class EffectDefinitions {
 
   get _globeOfInvulnerability() {
     return createActiveEffect({
-      label: 'Globe of Invulnerability',
+      name: "Globe d'invulnérabilité",
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/defensive/shield-barrier-flaming-pentagon-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1780,7 +1781,7 @@ export default class EffectDefinitions {
 
   get _greaterInvisibility() {
     return createActiveEffect({
-      label: 'Greater Invisibility',
+      name: 'Invisibilité suprême',
       description:
         'Grants advantage on attack rolls while forcing disadvantage to all who attack for 1 minute',
       icon: 'icons/magic/air/fog-gas-smoke-swirling-gray.webp',
@@ -1803,7 +1804,7 @@ export default class EffectDefinitions {
 
   get _guidance() {
     return createActiveEffect({
-      label: 'Guidance',
+      name: 'Assistance',
       description: 'Adds 1d4 to one ability or skill check for 1 minute',
       icon: 'icons/magic/control/buff-flight-wings-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1829,7 +1830,7 @@ export default class EffectDefinitions {
 
   get _guidingBolt() {
     return createActiveEffect({
-      label: 'Guiding Bolt',
+      name: 'Rayon traçant',
       description:
         'Grants advantage to next attacker or until the end of next turn',
       icon: 'icons/magic/fire/projectile-fireball-smoke-large-blue.webp',
@@ -1852,7 +1853,7 @@ export default class EffectDefinitions {
 
   get _haste() {
     return createActiveEffect({
-      label: 'Haste',
+      name: 'Hâte',
       description:
         'Double speed, add 2 to AC, and advantage on dexterity saving throws for 1 minute',
       icon: 'icons/magic/control/buff-flight-wings-runes-purple.webp',
@@ -1880,7 +1881,7 @@ export default class EffectDefinitions {
 
   get _heroesFeast() {
     return createActiveEffect({
-      label: "Heroes' Feast",
+      name: 'Festin des héros',
       description:
         'Immunity to poison and frightened, make all wisdom saving throws with advantage, and hit point maximum increases by 2d10 for 24 hours',
       icon: 'icons/magic/life/heart-cross-strong-flame-purple-orange.webp',
@@ -1907,7 +1908,7 @@ export default class EffectDefinitions {
 
   get _heroism() {
     return createActiveEffect({
-      label: 'Heroism',
+      name: 'Héroïsme',
       description: 'Immunity to frightened for 1 minute',
       icon: 'icons/magic/life/heart-cross-strong-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1923,7 +1924,7 @@ export default class EffectDefinitions {
 
   get _hideousLaughter() {
     return createActiveEffect({
-      label: 'Hideous Laughter',
+      name: 'Fou rire',
       description:
         'Apply the effects of the prone and incapacitated conditions for 1 minute',
       icon: 'icons/magic/fire/explosion-fireball-medium-purple-pink.webp',
@@ -1934,7 +1935,7 @@ export default class EffectDefinitions {
 
   get _holdMonster() {
     return createActiveEffect({
-      label: 'Hold Monster',
+      name: 'Immobilisation de monstre',
       description: 'Apply the effects of the paralyzed condition for 1 minute',
       icon: 'icons/magic/control/debuff-chains-ropes-red.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1957,7 +1958,7 @@ export default class EffectDefinitions {
   // label=Hold Person
   get _holdPerson() {
     return createActiveEffect({
-      label: 'Hold Person',
+      name: 'Immobilisation de personne',
       description: 'Apply the effects of the paralyzed condition for 1 minute',
       icon: 'icons/magic/control/debuff-chains-ropes-purple.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1974,7 +1975,7 @@ export default class EffectDefinitions {
 
   get _holyAura() {
     return createActiveEffect({
-      label: 'Holy Aura',
+      name: 'Aura sacrée',
       description:
         'Advantage on saving throws, grant disadvantage to all who attack, and emit dim light in 5 radius (requires ATL) for 1 minute',
       icon: 'icons/magic/control/buff-flight-wings-runes-blue-white.webp',
@@ -2018,7 +2019,7 @@ export default class EffectDefinitions {
 
   get _huntersMark() {
     return createActiveEffect({
-      label: "Hunter's Mark",
+      name: 'Marque du chasseur',
       description: 'No active effects and lasts until removed (for now)',
       icon: 'icons/magic/perception/eye-ringed-glow-angry-small-red.webp',
     });
@@ -2026,7 +2027,7 @@ export default class EffectDefinitions {
 
   get _invisibility() {
     return createActiveEffect({
-      label: 'Invisibility',
+      name: 'Invisibilité',
       description:
         'Grants advantage on next attack roll while forcing disadvantage to all who attack for 1 hour. Expires after 1 attack.',
       icon: 'icons/magic/air/fog-gas-smoke-dense-gray.webp',
@@ -2054,7 +2055,7 @@ export default class EffectDefinitions {
 
   get _irresistibleDance() {
     return createActiveEffect({
-      label: 'Irresistible Dance',
+      name: 'Danse irrésistible',
       description:
         'Zero movement, disadvantage on dexterity saving throws, disadvantage on attack rolls, and grants advantage to all who attack for 1 minute',
       icon: 'icons/magic/control/energy-stream-link-large-blue.webp',
@@ -2087,7 +2088,7 @@ export default class EffectDefinitions {
 
   get _jump() {
     return createActiveEffect({
-      label: 'Jump',
+      name: 'Saut',
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/control/debuff-energy-hold-blue-yellow.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2096,7 +2097,7 @@ export default class EffectDefinitions {
 
   get _light() {
     return createActiveEffect({
-      label: 'Light',
+      name: 'Lumière',
       description: 'Emits 20/40 light for 1 hour (requires ATL)',
       icon: 'icons/magic/light/explosion-star-small-blue-yellow.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2132,7 +2133,7 @@ export default class EffectDefinitions {
 
   get _longstrider() {
     return createActiveEffect({
-      label: 'Longstrider',
+      name: 'Grande foulée',
       description: 'Increase all movement by 10 ft. for 1 hour',
       icon: 'icons/magic/air/wind-stream-blue-gray.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2149,7 +2150,7 @@ export default class EffectDefinitions {
 
   get _mageArmor() {
     return createActiveEffect({
-      label: 'Mage Armor',
+      name: 'Armure du mage',
       description: 'Upgrades armor to 13 + dex modifier for 8 hours',
       icon: 'icons/magic/defensive/shield-barrier-glowing-triangle-blue.webp',
       seconds: Constants.SECONDS.IN_EIGHT_HOURS,
@@ -2166,7 +2167,7 @@ export default class EffectDefinitions {
 
   get _mindBlank() {
     return createActiveEffect({
-      label: 'Mind Blank',
+      name: 'Esprit impénétrable',
       description: 'Adds immunity to psychic damage for 24 hours',
       icon: 'icons/magic/air/air-burst-spiral-large-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_DAY,
@@ -2182,7 +2183,7 @@ export default class EffectDefinitions {
 
   get _mirrorImage() {
     return createActiveEffect({
-      label: 'Mirror Image',
+      name: 'Image miroir',
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/control/debuff-energy-hold-levitate-pink.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2199,7 +2200,7 @@ export default class EffectDefinitions {
   get _passWithoutTrace() {
     // TODO token magic effects
     return createActiveEffect({
-      label: 'Pass without Trace',
+      name: 'Passage sans trace',
       description: 'Add 10 to stealth checks for 1 hour',
       icon: 'icons/magic/air/fog-gas-smoke-brown.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2215,7 +2216,7 @@ export default class EffectDefinitions {
 
   get _protectionFromEnergy() {
     return createActiveEffect({
-      label: 'Protection from Energy',
+      name: "Protection contre l'énergie",
       description:
         'Choose between acid, cold, fire, lightning, or thunder resistance',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-teal.webp',
@@ -2232,7 +2233,7 @@ export default class EffectDefinitions {
   get _protectionFromEnergyAcid() {
     // TODO token magic effects
     return createActiveEffect({
-      label: 'Protection from Acid',
+      name: "Protection contre l'acide",
       description: 'Adds damage resistance to acid for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-acid.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2250,7 +2251,7 @@ export default class EffectDefinitions {
   get _protectionFromEnergyCold() {
     // TODO token magic effects
     return createActiveEffect({
-      label: 'Protection from Cold',
+      name: 'Protection contre le froid',
       description: 'Adds damage resistance to cold for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-blue.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2286,7 +2287,7 @@ export default class EffectDefinitions {
   get _protectionFromEnergyLightning() {
     // TODO token magic effects
     return createActiveEffect({
-      label: 'Protection from Lightning',
+      name: 'Protection contre la foudre',
       description: 'Adds damage resistance to lightning for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-blue-yellow.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2304,7 +2305,7 @@ export default class EffectDefinitions {
   get _protectionFromEnergyThunder() {
     // TODO token magic effects
     return createActiveEffect({
-      label: 'Protection from Thunder',
+      name: 'Protection contre le tonnerre',
       description: 'Adds damage resistance to thunder for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-teal-purple.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2322,7 +2323,7 @@ export default class EffectDefinitions {
   get _protectionFromPoison() {
     // TODO token magic effects
     return createActiveEffect({
-      label: 'Protection from Poison',
+      name: 'Protection contre le poison',
       description:
         'Adds resistance to poison for 1 hour (does not grant automatic advantage on saving throws against poison)',
       icon: 'icons/magic/defensive/shield-barrier-glowing-triangle-green.webp',
@@ -2339,7 +2340,7 @@ export default class EffectDefinitions {
 
   get _protectionFromEvilAndGood() {
     return createActiveEffect({
-      label: 'Protection from Evil and Good',
+      name: 'Protection contre le mal et le bien',
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-blue-yellow.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2348,7 +2349,7 @@ export default class EffectDefinitions {
 
   get _rayOfFrost() {
     return createActiveEffect({
-      label: 'Ray of Frost',
+      name: 'Rayon de givre',
       description: 'Lowers movement by 10 ft',
       icon: 'icons/magic/light/beam-rays-blue-small.webp',
       seconds: CONFIG.time.roundTime,
@@ -2365,7 +2366,7 @@ export default class EffectDefinitions {
 
   get _regenerate() {
     return createActiveEffect({
-      label: 'Regenerate',
+      name: 'Régénération',
       description: 'Regain 1 hit point at the start of each turn for 1 hour',
       icon: 'icons/magic/life/heart-cross-strong-flame-green.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2382,7 +2383,7 @@ export default class EffectDefinitions {
 
   get _resilientSphere() {
     return createActiveEffect({
-      label: 'Resilient Sphere',
+      name: 'Sphere résiliente',
       description: 'Adds total immunity to all damage and half movement',
       icon: 'icons/magic/light/explosion-star-large-pink.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2404,7 +2405,7 @@ export default class EffectDefinitions {
 
   get _resistance() {
     return createActiveEffect({
-      label: 'Resistance',
+      name: 'Résistance',
       description: 'Add 1d4 to a single saving throw in the next minute',
       icon: 'icons/magic/defensive/shield-barrier-glowing-triangle-orange.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2425,7 +2426,7 @@ export default class EffectDefinitions {
 
   get _shield() {
     return createActiveEffect({
-      label: 'Shield',
+      name: 'Bouclier',
       description: 'Add 5 to AC until next turn',
       icon: 'icons/magic/defensive/shield-barrier-glowing-triangle-magenta.webp',
       seconds: CONFIG.time.roundTime,
@@ -2454,7 +2455,7 @@ export default class EffectDefinitions {
 
   get _shieldOfFaith() {
     return createActiveEffect({
-      label: 'Shield of Faith',
+      name: 'Bouclier de la foi',
       description: 'Adds 2 to the AC for 10 minutes',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-blue-yellow.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2477,7 +2478,7 @@ export default class EffectDefinitions {
 
   get _slow() {
     return createActiveEffect({
-      label: 'Slow',
+      name: 'Lenteur',
       description:
         'Halves movement and and subtract 2 from AC and dexterity saving throws for 1 minute',
       icon: 'icons/magic/air/fog-gas-smoke-dense-pink.webp',
@@ -2505,7 +2506,7 @@ export default class EffectDefinitions {
 
   get _speakWithAnimals() {
     return createActiveEffect({
-      label: 'Speak with Animals',
+      name: 'Communication avec les animaux',
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/nature/wolf-paw-glow-small-teal-blue.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2514,7 +2515,7 @@ export default class EffectDefinitions {
 
   get _speakWithDead() {
     return createActiveEffect({
-      label: 'Speak with Dead',
+      name: 'Communication avec les morts',
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/control/fear-fright-shadow-monster-green.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2532,7 +2533,7 @@ export default class EffectDefinitions {
 
   get _spiderClimb() {
     return createActiveEffect({
-      label: 'Spider Climb',
+      name: "Pattes d'araignée",
       description: 'Grants climbing speed equal to walking speed for 1 hour',
       icon: 'icons/magic/control/debuff-chains-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2549,7 +2550,7 @@ export default class EffectDefinitions {
 
   get _spiritGuardians() {
     return createActiveEffect({
-      label: 'Spirit Guardians',
+      name: 'Esprits gardiens',
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/light/projectile-bolts-salvo-white.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2558,7 +2559,7 @@ export default class EffectDefinitions {
 
   get _spiritualWeapon() {
     return createActiveEffect({
-      label: 'Spiritual Weapon',
+      name: 'Arme spirituelle',
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/fire/dagger-rune-enchant-flame-purple.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2568,7 +2569,7 @@ export default class EffectDefinitions {
   get _stoneskin() {
     // TODO token magic effects
     return createActiveEffect({
-      label: 'Stoneskin',
+      name: 'Peau de pierre',
       description: 'Adds resistance to non-magical physical damage for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-orange.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2593,7 +2594,7 @@ export default class EffectDefinitions {
 
   get _telekinesis() {
     return createActiveEffect({
-      label: 'Telekinesis',
+      name: 'Télékinésie',
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/control/debuff-energy-hold-levitate-yellow.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2602,7 +2603,7 @@ export default class EffectDefinitions {
 
   get _trueStrike() {
     return createActiveEffect({
-      label: 'True Strike',
+      name: 'Coup au but',
       description:
         'Grants advantage on next attack or until the end of next turn',
       icon: 'icons/magic/fire/dagger-rune-enchant-blue-gray.webp',
@@ -2625,7 +2626,7 @@ export default class EffectDefinitions {
 
   get _viciousMockery() {
     return createActiveEffect({
-      label: 'Vicious Mockery',
+      name: 'Moquerie cruelle',
       description:
         'Grants disadvantage on next attack or until the end of next turn',
       icon: 'icons/skills/toxins/cup-goblet-poisoned-spilled.webp',
@@ -2648,7 +2649,7 @@ export default class EffectDefinitions {
 
   get _wardingBond() {
     return createActiveEffect({
-      label: 'Warding Bond',
+      name: 'Lien de protection',
       description:
         'Adds 1 to AC and saving throws and grants resistance to all damage for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-blue-yellow.webp',
@@ -2680,7 +2681,7 @@ export default class EffectDefinitions {
 
   get _waterBreathing() {
     return createActiveEffect({
-      label: 'Water Breathing',
+      name: 'Respiration aquatique',
       description: 'No active effects and lasts for 24 hours',
       icon: 'icons/magic/water/pseudopod-swirl-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_DAY,
@@ -2689,7 +2690,7 @@ export default class EffectDefinitions {
 
   get _waterWalk() {
     return createActiveEffect({
-      label: 'Water Walk',
+      name: "Marche sur l'onde",
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/creatures/slimes/slime-movement-swirling-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
