@@ -227,20 +227,20 @@ export default class EffectDefinitions {
    */
   get other() {
     return [
-      this._bonusAction,
+      // this._bonusAction,
       this._coverHalf,
       this._coverThreeQuarters,
-      this._encumbered,
-      this._dodge,
-      this._flanked,
-      this._flanking,
-      this._greatWeaponMaster,
-      this._heavilyEncumbered,
-      this._inspiration,
-      this._rangedDisadvantage,
-      this._reaction,
+      // this._encumbered,
+      // this._dodge,
+      // this._flanked,
+      // this._flanking,
+      // this._greatWeaponMaster,
+      // this._heavilyEncumbered,
+      // this._inspiration,
+      // this._rangedDisadvantage,
+      // this._reaction,
       this._ready,
-      this._sharpshooter,
+      // this._sharpshooter,
     ];
   }
 
@@ -3460,22 +3460,22 @@ export default class EffectDefinitions {
   }
 
   /* Other effects */
-  get _bonusAction() {
-    return createActiveEffect({
-      label: 'Bonus Action',
-      description: 'No active effects and expires on turn start',
-      icon: 'modules/foundryvtt-convenient-effects-nolat/images/bonus-action.svg',
-      flags: {
-        dae: {
-          specialDuration: ['turnStart', 'shortRest', 'longRest'],
-        },
-      },
-    });
-  }
+  // get _bonusAction() {
+  //   return createActiveEffect({
+  //     name: 'Bonus Action',
+  //     description: 'No active effects and expires on turn start',
+  //     icon: 'modules/foundryvtt-convenient-effects-nolat/images/bonus-action.svg',
+  //     flags: {
+  //       dae: {
+  //         specialDuration: ['turnStart', 'shortRest', 'longRest'],
+  //       },
+  //     },
+  //   });
+  // }
 
   get _coverHalf() {
     return createActiveEffect({
-      label: 'Cover (Half)',
+      name: 'Abri partiel (50%)',
       description: 'Adds 2 to AC and dexterity saving throws',
       icon: 'modules/foundryvtt-convenient-effects-nolat/images/broken-wall.svg',
       changes: [
@@ -3495,7 +3495,7 @@ export default class EffectDefinitions {
 
   get _coverThreeQuarters() {
     return createActiveEffect({
-      label: 'Cover (Three-Quarters)',
+      name: 'Abri important (75%)',
       description: 'Adds 5 to AC and dexterity saving throws',
       icon: 'modules/foundryvtt-convenient-effects-nolat/images/brick-wall.svg',
       changes: [
@@ -3513,202 +3513,202 @@ export default class EffectDefinitions {
     });
   }
 
-  get _encumbered() {
-    return createActiveEffect({
-      label: 'Encumbered',
-      description: 'Lowers movement by 10 ft.',
-      icon: 'icons/svg/down.svg',
-      changes: [
-        {
-          key: 'system.attributes.movement.all',
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '-10',
-          priority: 25,
-        },
-      ],
-    });
-  }
+  // get _encumbered() {
+  //   return createActiveEffect({
+  //     name: 'Encumbered',
+  //     description: 'Lowers movement by 10 ft.',
+  //     icon: 'icons/svg/down.svg',
+  //     changes: [
+  //       {
+  //         key: 'system.attributes.movement.all',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '-10',
+  //         priority: 25,
+  //       },
+  //     ],
+  //   });
+  // }
 
-  get _dodge() {
-    return createActiveEffect({
-      label: 'Dodge',
-      description:
-        'Grants disadvantage to all who attack and advantage on all dexterity saving throws until next turn',
-      icon: 'modules/foundryvtt-convenient-effects-nolat/images/dodging.svg',
-      flags: {
-        dae: {
-          specialDuration: ['turnStart'],
-        },
-      },
-      changes: [
-        {
-          key: `flags.${this._flagPrefix}.grants.disadvantage.attack.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: `flags.${this._flagPrefix}.advantage.ability.save.dex`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-      ],
-    });
-  }
+  // get _dodge() {
+  //   return createActiveEffect({
+  //     name: 'Dodge',
+  //     description:
+  //       'Grants disadvantage to all who attack and advantage on all dexterity saving throws until next turn',
+  //     icon: 'modules/foundryvtt-convenient-effects-nolat/images/dodging.svg',
+  //     flags: {
+  //       dae: {
+  //         specialDuration: ['turnStart'],
+  //       },
+  //     },
+  //     changes: [
+  //       {
+  //         key: 'flags.midi-qol.grants.disadvantage.attack.all',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //       {
+  //         key: 'flags.midi-qol.advantage.ability.save.dex',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //     ],
+  //   });
+  // }
 
-  get _flanked() {
-    return createActiveEffect({
-      label: 'Flanked',
-      description: 'Grants advantage to all who melee attack',
-      icon: 'modules/foundryvtt-convenient-effects-nolat/images/encirclement.svg',
-      changes: [
-        {
-          key: `flags.${this._flagPrefix}.grants.advantage.attack.mwak`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: `flags.${this._flagPrefix}.grants.advantage.attack.msak`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-      ],
-    });
-  }
+  // get _flanked() {
+  //   return createActiveEffect({
+  //     name: 'Flanked',
+  //     description: 'Grants advantage to all who melee attack',
+  //     icon: 'modules/foundryvtt-convenient-effects-nolat/images/encirclement.svg',
+  //     changes: [
+  //       {
+  //         key: 'flags.midi-qol.grants.advantage.attack.mwak',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //       {
+  //         key: 'flags.midi-qol.grants.advantage.attack.msak',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //     ],
+  //   });
+  // }
 
-  get _flanking() {
-    return createActiveEffect({
-      label: 'Flanking',
-      description: 'Grants advantage on melee attack rolls',
-      icon: 'icons/svg/sword.svg',
-      changes: [
-        {
-          key: `flags.${this._flagPrefix}.advantage.attack.mwak`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: `flags.${this._flagPrefix}.advantage.attack.msak`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-      ],
-    });
-  }
+  // get _flanking() {
+  //   return createActiveEffect({
+  //     name: 'Flanking',
+  //     description: 'Grants advantage on melee attack rolls',
+  //     icon: 'icons/svg/sword.svg',
+  //     changes: [
+  //       {
+  //         key: 'flags.midi-qol.advantage.attack.mwak',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //       {
+  //         key: 'flags.midi-qol.advantage.attack.msak',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //     ],
+  //   });
+  // }
 
-  get _greatWeaponMaster() {
-    return createActiveEffect({
-      label: 'Great Weapon Master',
-      description: 'Subtracts 5 from melee attacks but adds 10 to melee damage',
-      icon: 'icons/skills/melee/hand-grip-staff-yellow-brown.webp',
-      changes: [
-        {
-          key: 'system.bonuses.mwak.attack',
-          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-          value: '-5',
-        },
-        {
-          key: 'system.bonuses.mwak.damage',
-          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-          value: '+10',
-        },
-      ],
-    });
-  }
+  // get _greatWeaponMaster() {
+  //   return createActiveEffect({
+  //     name: 'Great Weapon Master',
+  //     description: 'Subtracts 5 from melee attacks but adds 10 to melee damage',
+  //     icon: 'icons/skills/melee/hand-grip-staff-yellow-brown.webp',
+  //     changes: [
+  //       {
+  //         key: 'system.bonuses.mwak.attack',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+  //         value: '-5',
+  //       },
+  //       {
+  //         key: 'system.bonuses.mwak.damage',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+  //         value: '+10',
+  //       },
+  //     ],
+  //   });
+  // }
 
-  get _heavilyEncumbered() {
-    return createActiveEffect({
-      label: 'Heavily Encumbered',
-      description:
-        'Lowers movement by 20 ft., disadvantage on all attack rolls, and disadvantage on strength, dexterity, and constitution saves',
-      icon: 'icons/svg/downgrade.svg',
-      changes: [
-        {
-          key: 'system.attributes.movement.all',
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '-20',
-          priority: 25,
-        },
-        {
-          key: `flags.${this._flagPrefix}.disadvantage.attack.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: `flags.${this._flagPrefix}.disadvantage.ability.save.str`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: `flags.${this._flagPrefix}.disadvantage.ability.save.dex`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: `flags.${this._flagPrefix}.disadvantage.ability.save.con`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-      ],
-    });
-  }
+  // get _heavilyEncumbered() {
+  //   return createActiveEffect({
+  //     name: 'Heavily Encumbered',
+  //     description:
+  //       'Lowers movement by 20 ft., disadvantage on all attack rolls, and disadvantage on strength, dexterity, and constitution saves',
+  //     icon: 'icons/svg/downgrade.svg',
+  //     changes: [
+  //       {
+  //         key: 'system.attributes.movement.all',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '-20',
+  //         priority: 25,
+  //       },
+  //       {
+  //         key: 'flags.midi-qol.disadvantage.attack.all',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //       {
+  //         key: 'flags.midi-qol.disadvantage.ability.save.str',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //       {
+  //         key: 'flags.midi-qol.disadvantage.ability.save.dex',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //       {
+  //         key: 'flags.midi-qol.disadvantage.ability.save.con',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //     ],
+  //   });
+  // }
 
-  get _inspiration() {
-    return createActiveEffect({
-      label: 'Inspiration',
-      description:
-        'Advantage on everything and expires after any action, save, check, or skill roll',
-      icon: 'icons/magic/control/buff-luck-fortune-green.webp',
-      flags: {
-        dae: {
-          specialDuration: ['1Action', 'isSave', 'isCheck', 'isSkill'],
-        },
-      },
-      changes: [
-        {
-          key: `flags.${this._flagPrefix}.advantage.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '1',
-        },
-      ],
-    });
-  }
+  // get _inspiration() {
+  //   return createActiveEffect({
+  //     name: 'Inspiration',
+  //     description:
+  //       'Advantage on everything and expires after any action, save, check, or skill roll',
+  //     icon: 'icons/magic/control/buff-luck-fortune-green.webp',
+  //     flags: {
+  //       dae: {
+  //         specialDuration: ['1Action', 'isSave', 'isCheck', 'isSkill'],
+  //       },
+  //     },
+  //     changes: [
+  //       {
+  //         key: 'flags.midi-qol.advantage.all',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+  //         value: '1',
+  //       },
+  //     ],
+  //   });
+  // }
 
-  get _rangedDisadvantage() {
-    return createActiveEffect({
-      label: 'Ranged Disadvantage',
-      description: 'Disadvantage on ranged attack rolls',
-      icon: 'modules/foundryvtt-convenient-effects-nolat/images/broken-arrow.svg',
-      changes: [
-        {
-          key: `flags.${this._flagPrefix}.disadvantage.attack.rwak`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: `flags.${this._flagPrefix}.disadvantage.attack.rsak`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-      ],
-    });
-  }
+  // get _rangedDisadvantage() {
+  //   return createActiveEffect({
+  //     name: 'Ranged Disadvantage',
+  //     description: 'Disadvantage on ranged attack rolls',
+  //     icon: 'modules/foundryvtt-convenient-effects-nolat/images/broken-arrow.svg',
+  //     changes: [
+  //       {
+  //         key: 'flags.midi-qol.disadvantage.attack.rwak',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //       {
+  //         key: 'flags.midi-qol.disadvantage.attack.rsak',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+  //         value: '1',
+  //       },
+  //     ],
+  //   });
+  // }
 
-  get _reaction() {
-    return createActiveEffect({
-      label: 'Reaction',
-      description: 'No active effects and expires on turn start',
-      icon: 'modules/foundryvtt-convenient-effects-nolat/images/reaction.svg',
-      flags: {
-        dae: {
-          specialDuration: ['turnStart', 'shortRest', 'longRest'],
-        },
-      },
-    });
-  }
+  // get _reaction() {
+  //   return createActiveEffect({
+  //     name: 'Reaction',
+  //     description: 'No active effects and expires on turn start',
+  //     icon: 'modules/foundryvtt-convenient-effects-nolat/images/reaction.svg',
+  //     flags: {
+  //       dae: {
+  //         specialDuration: ['turnStart', 'shortRest', 'longRest'],
+  //       },
+  //     },
+  //   });
+  // }
 
   get _ready() {
     return createActiveEffect({
-      label: 'Ready',
+      name: 'Prêt',
       description: 'No active effects and expires on turn start',
       icon: 'modules/foundryvtt-convenient-effects-nolat/images/ready.svg',
       flags: {
@@ -3719,24 +3719,24 @@ export default class EffectDefinitions {
     });
   }
 
-  get _sharpshooter() {
-    return createActiveEffect({
-      label: 'Sharpshooter',
-      description:
-        'Subtracts 5 from ranged attacks but adds 10 to ranged damage',
-      icon: 'icons/weapons/bows/shortbow-recurve-yellow.webp',
-      changes: [
-        {
-          key: 'system.bonuses.rwak.attack',
-          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-          value: '-5',
-        },
-        {
-          key: 'system.bonuses.rwak.damage',
-          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-          value: '+10',
-        },
-      ],
-    });
-  }
+  // get _sharpshooter() {
+  //   return createActiveEffect({
+  //     name: 'Sharpshooter',
+  //     description:
+  //       'Subtracts 5 from ranged attacks but adds 10 to ranged damage',
+  //     icon: 'icons/weapons/bows/shortbow-recurve-yellow.webp',
+  //     changes: [
+  //       {
+  //         key: 'system.bonuses.rwak.attack',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+  //         value: '-5',
+  //       },
+  //       {
+  //         key: 'system.bonuses.rwak.damage',
+  //         mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+  //         value: '+10',
+  //       },
+  //     ],
+  //   });
+  // }
 }
