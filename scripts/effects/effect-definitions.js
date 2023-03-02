@@ -2524,7 +2524,7 @@ export default class EffectDefinitions {
 
   get _speakWithPlants() {
     return createActiveEffect({
-      label: 'Speak with Plants',
+      label: 'Communication avec les plantes',
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/nature/leaf-glow-teal.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2850,10 +2850,10 @@ export default class EffectDefinitions {
       icon: 'icons/magic/symbols/runes-star-pentagon-blue.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
       nestedEffects: [
-        this._magicInspirationD6,
-        this._magicInspirationD8,
-        this._magicInspirationD10,
-        this._magicInspirationD12,
+        this._magicInspirationD6.label,
+        this._magicInspirationD8.label,
+        this._magicInspirationD10.label,
+        this._magicInspirationD12.label,
       ],
     });
   }
