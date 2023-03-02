@@ -190,6 +190,11 @@ export default class EffectDefinitions {
       this._bardicInspirationD8,
       this._bardicInspirationD10,
       this._bardicInspirationD12,
+      this._magicInspiration,
+      this._magicInspirationD6,
+      this._magicInspirationD8,
+      this._magicInspirationD10,
+      this._magicInspirationD12,
       this._channelDivinitySacredWeapon,
       this._channelDivinityTurnTheUnholy,
       this._channelDivinityTurnUndead,
@@ -1503,7 +1508,7 @@ export default class EffectDefinitions {
         {
           key: 'ATL.light.dim',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '10',
+          value: '3',
         },
         {
           key: 'ATL.light.color',
@@ -1601,12 +1606,12 @@ export default class EffectDefinitions {
         {
           key: 'ATL.light.dim',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '20',
+          value: '6',
         },
         {
           key: 'ATL.light.bright',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '10',
+          value: '3',
         },
         {
           key: 'ATL.light.color',
@@ -1652,12 +1657,12 @@ export default class EffectDefinitions {
         {
           key: 'ATL.light.dim',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '20',
+          value: '6',
         },
         {
           key: 'ATL.light.bright',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '10',
+          value: '3',
         },
         {
           key: 'ATL.light.color',
@@ -1990,7 +1995,7 @@ export default class EffectDefinitions {
         {
           key: 'ATL.light.dim',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '5',
+          value: '1.5',
         },
         {
           key: 'ATL.light.color',
@@ -2099,12 +2104,12 @@ export default class EffectDefinitions {
         {
           key: 'ATL.light.dim',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '40',
+          value: '12',
         },
         {
           key: 'ATL.light.bright',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '20',
+          value: '6',
         },
         {
           key: 'ATL.light.color',
@@ -2694,7 +2699,7 @@ export default class EffectDefinitions {
   /** Class specific */
   get _bardicInspiration() {
     return createActiveEffect({
-      label: 'Bardic Inspiration',
+      name: 'Inspiration bardique',
       description:
         'Add a dice to a single ability check, attack roll, or saving throw in the next 10 minutes',
       icon: 'icons/skills/melee/unarmed-punch-fist.webp',
@@ -2710,7 +2715,7 @@ export default class EffectDefinitions {
 
   get _bardicInspirationD6() {
     return createActiveEffect({
-      label: 'Bardic Inspiration (d6)',
+      name: 'Inspiration bardique (d6)',
       description: 'For bards from level 1 to level 4',
       icon: 'icons/skills/melee/unarmed-punch-fist.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2742,7 +2747,7 @@ export default class EffectDefinitions {
 
   get _bardicInspirationD8() {
     return createActiveEffect({
-      label: 'Bardic Inspiration (d8)',
+      name: 'Inspiration bardique (d8)',
       description: 'For bards from level 5 to level 9',
       icon: 'icons/skills/melee/unarmed-punch-fist.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2774,7 +2779,7 @@ export default class EffectDefinitions {
 
   get _bardicInspirationD10() {
     return createActiveEffect({
-      label: 'Bardic Inspiration (d10)',
+      name: 'Inspiration bardique (d10)',
       description: 'For bards from level 10 to level 14',
       icon: 'icons/skills/melee/unarmed-punch-fist.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2806,7 +2811,7 @@ export default class EffectDefinitions {
 
   get _bardicInspirationD12() {
     return createActiveEffect({
-      label: 'Bardic Inspiration (d12)',
+      name: 'Inspiration bardique (d12)',
       description: 'For bards from level 15 to level 20',
       icon: 'icons/skills/melee/unarmed-punch-fist.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2836,9 +2841,153 @@ export default class EffectDefinitions {
     });
   }
 
+  get _magicInspiration() {
+    return createActiveEffect({
+      name: 'Inspiration magique',
+      description:
+        'Add a dice to a single ability check, attack roll, or saving throw in the next 10 minutes',
+      icon: 'icons/magic/symbols/runes-star-pentagon-blue.webp',
+      seconds: Constants.SECONDS.IN_TEN_MINUTES,
+      nestedEffects: [
+        this._magicInspirationD6,
+        this._magicInspirationD8,
+        this._magicInspirationD10,
+        this._magicInspirationD12,
+      ],
+    });
+  }
+
+  get _magicInspirationD6() {
+    return createActiveEffect({
+      name: 'Inspiration magique (d6)',
+      description: 'For bards from level 1 to level 4',
+      icon: 'icons/magic/symbols/runes-star-pentagon-blue.webp',
+      isViewable: this._settings.showNestedEffects,
+      seconds: Constants.SECONDS.IN_TEN_MINUTES,
+      changes: [
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.label',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: 'Bardic Inspiration',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.attack.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d6',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.save.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d6',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.skill.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d6',
+        },
+      ],
+    });
+  }
+
+  get _magicInspirationD8() {
+    return createActiveEffect({
+      name: 'Inspiration magique (d8)',
+      description: 'For bards from level 5 to level 9',
+      icon: 'icons/magic/symbols/runes-star-pentagon-blue.webp',
+      isViewable: this._settings.showNestedEffects,
+      seconds: Constants.SECONDS.IN_TEN_MINUTES,
+      changes: [
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.label',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: 'Bardic Inspiration',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.attack.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d8',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.save.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d8',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.skill.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d8',
+        },
+      ],
+    });
+  }
+
+  get _magicInspirationD10() {
+    return createActiveEffect({
+      name: 'Inspiration magique (d10)',
+      description: 'For bards from level 10 to level 14',
+      icon: 'icons/magic/symbols/runes-star-pentagon-blue.webp',
+      isViewable: this._settings.showNestedEffects,
+      seconds: Constants.SECONDS.IN_TEN_MINUTES,
+      changes: [
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.label',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: 'Bardic Inspiration',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.attack.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d10',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.save.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d10',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.skill.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d10',
+        },
+      ],
+    });
+  }
+
+  get _magicInspirationD12() {
+    return createActiveEffect({
+      name: 'Inspiration magique (d12)',
+      description: 'For bards from level 15 to level 20',
+      icon: 'icons/magic/symbols/runes-star-pentagon-blue.webp',
+      isViewable: this._settings.showNestedEffects,
+      seconds: Constants.SECONDS.IN_TEN_MINUTES,
+      changes: [
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.label',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: 'Bardic Inspiration',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.attack.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d12',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.save.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d12',
+        },
+        {
+          key: 'flags.midi-qol.optional.bardic-inspiration.skill.all',
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+          value: '+1d12',
+        },
+      ],
+    });
+  }
+
   get _channelDivinitySacredWeapon() {
     return createActiveEffect({
-      label: 'Channel Divinity: Sacred Weapon',
+      name: 'Conduit divin : Arme sacré',
       description:
         'Add charisma modifier (minimum +1) to all weapon attack rolls and emits 20/40 light for 1 minute (requires ATL)',
       icon: 'icons/weapons/swords/sword-gold-holy.webp',
@@ -2859,12 +3008,12 @@ export default class EffectDefinitions {
         {
           key: 'ATL.light.dim',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '40',
+          value: '12',
         },
         {
           key: 'ATL.light.bright',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '20',
+          value: '6',
         },
         {
           key: 'ATL.light.color',
@@ -2887,7 +3036,7 @@ export default class EffectDefinitions {
 
   get _channelDivinityTurnTheUnholy() {
     return createActiveEffect({
-      label: 'Channel Divinity: Turn the Unholy',
+      name: 'Conduit divin : Renvoi des impies',
       description:
         'No active effects and lasts for 1 minute. Expires on taking damage.',
       icon: 'icons/magic/fire/explosion-embers-evade-silhouette.webp',
@@ -2902,7 +3051,7 @@ export default class EffectDefinitions {
 
   get _channelDivinityTurnUndead() {
     return createActiveEffect({
-      label: 'Channel Divinity: Turn Undead',
+      name: 'Conduit divin : renvoi des morts-vivants',
       description:
         'No active effects and lasts for 1 minute. Expires on taking damage.',
       icon: 'icons/magic/fire/flame-burning-creature-skeleton.webp',
@@ -2917,7 +3066,7 @@ export default class EffectDefinitions {
 
   get _kiEmptyBody() {
     return createActiveEffect({
-      label: 'Ki: Empty Body',
+      name: "Ki : Désertion de l'âme",
       description:
         'Grants advantage on attack rolls, forces disadvantage to all who attack, and grants resistance to all damage except force for 1 minute',
       icon: 'icons/magic/perception/silhouette-stealth-shadow.webp',
@@ -3014,7 +3163,7 @@ export default class EffectDefinitions {
 
   get _kiPatientDefense() {
     return createActiveEffect({
-      label: 'Ki: Patient Defense',
+      name: 'Ki : Patience défensive ',
       description:
         'Grants disadvantage to all who attack and advantage on all dexterity saving throws until next turn',
       icon: 'icons/magic/defensive/shield-barrier-glowing-blue.webp',
@@ -3088,7 +3237,7 @@ export default class EffectDefinitions {
 
   get _recklessAttack() {
     return createActiveEffect({
-      label: 'Reckless Attack',
+      name: 'Attaque téméraire',
       description:
         'Advantage on melee attacks for a turn and grants advantage to those who attack for 1 round',
       icon: 'icons/skills/melee/blade-tips-triple-bent-white.webp',
@@ -3126,7 +3275,7 @@ export default class EffectDefinitions {
   /* Equipment effects */
   get _bullseyeLantern() {
     return createActiveEffect({
-      label: 'Bullseye Lantern',
+      name: 'Lanterne sourde',
       description:
         'Adds lantern light in a 60 degree cone for 6 hours (requires ATL)',
       icon: 'icons/sundries/lights/lantern-iron-yellow.webp',
@@ -3140,12 +3289,12 @@ export default class EffectDefinitions {
         {
           key: 'ATL.light.dim',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '120',
+          value: '36',
         },
         {
           key: 'ATL.light.bright',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '60',
+          value: '18',
         },
         {
           key: 'ATL.light.color',
@@ -3168,7 +3317,7 @@ export default class EffectDefinitions {
 
   get _candle() {
     return createActiveEffect({
-      label: 'Candle',
+      name: 'Bougie',
       description: 'Adds candle light for 1 hour (requires ATL)',
       icon: 'icons/sundries/lights/candle-unlit-white.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -3176,12 +3325,12 @@ export default class EffectDefinitions {
         {
           key: 'ATL.light.dim',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '10',
+          value: '3',
         },
         {
           key: 'ATL.light.bright',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '5',
+          value: '1.5',
         },
         {
           key: 'ATL.light.color',
@@ -3204,7 +3353,7 @@ export default class EffectDefinitions {
 
   get _hoodedLantern() {
     return createActiveEffect({
-      label: 'Hooded Lantern',
+      name: 'Lanterne à capote',
       description: 'Adds hooded lantern light for 6 hours (requires ATL)',
       icon: 'icons/sundries/lights/lantern-iron-yellow.webp',
       seconds: Constants.SECONDS.IN_SIX_HOURS,
@@ -3212,7 +3361,7 @@ export default class EffectDefinitions {
         {
           key: 'ATL.light.dim',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '5',
+          value: '1.5',
         },
         {
           key: 'ATL.light.bright',
@@ -3240,7 +3389,7 @@ export default class EffectDefinitions {
 
   get _lantern() {
     return createActiveEffect({
-      label: 'Lantern',
+      name: 'Lanterne',
       description: 'Adds lantern light for 6 hours (requires ATL)',
       icon: 'icons/sundries/lights/lantern-iron-yellow.webp',
       seconds: Constants.SECONDS.IN_SIX_HOURS,
@@ -3248,12 +3397,12 @@ export default class EffectDefinitions {
         {
           key: 'ATL.light.dim',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '60',
+          value: '18',
         },
         {
           key: 'ATL.light.bright',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '30',
+          value: '9',
         },
         {
           key: 'ATL.light.color',
@@ -3276,7 +3425,7 @@ export default class EffectDefinitions {
 
   get _torch() {
     return createActiveEffect({
-      label: 'Torch',
+      name: 'Torche',
       description: 'Adds torch light for 1 hour (requires ATL)',
       icon: 'icons/sundries/lights/torch-black.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -3284,12 +3433,12 @@ export default class EffectDefinitions {
         {
           key: 'ATL.light.dim',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '40',
+          value: '12',
         },
         {
           key: 'ATL.light.bright',
           mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '20',
+          value: '6',
         },
         {
           key: 'ATL.light.color',
