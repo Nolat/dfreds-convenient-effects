@@ -32,18 +32,26 @@ export default class Settings {
 
   _registerConfigSettings() {
     const userRoles = {};
-    userRoles[CONST.USER_ROLES.PLAYER] = 'Player';
-    userRoles[CONST.USER_ROLES.TRUSTED] = 'Trusted Player';
-    userRoles[CONST.USER_ROLES.ASSISTANT] = 'Assistant GM';
-    userRoles[CONST.USER_ROLES.GAMEMASTER] = 'Game Master';
-    userRoles[5] = 'None';
+    userRoles[CONST.USER_ROLES.PLAYER] = game.i18n.localize(
+      'Settings.UserRolesPlayer'
+    );
+    userRoles[CONST.USER_ROLES.TRUSTED] = game.i18n.localize(
+      'Settings.UserRolesTrustedPlayer'
+    );
+    userRoles[CONST.USER_ROLES.ASSISTANT] = game.i18n.localize(
+      'Settings.UserRolesAssistantGM'
+    );
+    userRoles[CONST.USER_ROLES.GAMEMASTER] = game.i18n.localize(
+      'Settings.UserRolesGameMaster'
+    );
+    userRoles[5] = game.i18n.localize('Settings.UserRolesNone');
 
     game.settings.register(
       Constants.MODULE_ID,
       Settings.CHAT_MESSAGE_PERMISSION,
       {
-        name: 'Chat Message Permission',
-        hint: 'This defines the minimum permission level to see chat messages when effects are applied, removed, or expire. Setting this to None will never show chat messages.',
+        name: game.i18n.localize('Settings.ChatMessagePermissionName'),
+        hint: game.i18n.localize('Settings.ChatMessagePermissionHint'),
         scope: 'world',
         config: true,
         default: CONST.USER_ROLES.GAMEMASTER,
@@ -56,8 +64,8 @@ export default class Settings {
       Constants.MODULE_ID,
       Settings.APP_CONTROLS_PERMISSION,
       {
-        name: 'App Controls Permission',
-        hint: 'This defines the minimum permission level to see and apply Convenient Effects through the application via the button on token controls. Setting this to None will disable the button entirely.',
+        name: game.i18n.localize('Settings.AppControlsPermission'),
+        hint: game.i18n.localize('Settings.AppControlsPermissionHint'),
         scope: 'world',
         config: true,
         default: CONST.USER_ROLES.GAMEMASTER,
@@ -71,8 +79,8 @@ export default class Settings {
       Constants.MODULE_ID,
       Settings.REMOVE_CONTROLS_PERMISSION,
       {
-        name: 'Remove Controls Permission',
-        hint: 'This defines the minimum permission level to remove Convenient Effects through the button on the token controls. Setting this to None will disable the button entirely.',
+        name: game.i18n.localize('Settings.RemoveControlsPermission'),
+        hint: game.i18n.localize('Settings.RemoveControlsPermissionHint'),
         scope: 'world',
         config: true,
         default: CONST.USER_ROLES.GAMEMASTER,
@@ -86,15 +94,15 @@ export default class Settings {
       Constants.MODULE_ID,
       Settings.MODIFY_STATUS_EFFECTS,
       {
-        name: 'Modify Status Effects',
-        hint: 'This is how status effects on the token HUD will be modified. Replacing them means all other status effects will be removed in favor of the conditions provided by Convenient Effects. Adding them means they are appended to the end of the existing status effects. Requires a Foundry reload on change.',
+        name: game.i18n.localize('Settings.ModifyStatusEffects'),
+        hint: game.i18n.localize('Settings.ModifyStatusEffectsHint'),
         scope: 'world',
         config: true,
         default: 'none',
         choices: {
-          none: 'None',
-          replace: 'Replace',
-          add: 'Add',
+          none: game.i18n.localize('Settings.ModifyStatusEffectsNone'),
+          replace: game.i18n.localize('Settings.ModifyStatusEffectsReplace'),
+          add: game.i18n.localize('Settings.ModifyStatusEffectsAdd'),
         },
         type: String,
         requiresReload: true,
@@ -105,15 +113,21 @@ export default class Settings {
       Constants.MODULE_ID,
       Settings.SHOW_CHAT_MESSAGE_EFFECT_DESCRIPTION,
       {
-        name: 'Show Chat Message Effect Description',
-        hint: 'This is when effect descriptions are shown on chat messages.',
+        name: game.i18n.localize('Settings.ShowChatMessageEffectDescription'),
+        hint: game.i18n.localize('Settings.ShowChatMessageEffectDescription'),
         scope: 'world',
         config: true,
         default: 'onAddOrRemove',
         choices: {
-          onAddOrRemove: 'On Add or Remove',
-          onAddOnly: 'On Add Only',
-          never: 'Never',
+          onAddOrRemove: game.i18n.localize(
+            'Settings.ShowChatMessageEffectDescriptionOnAddorRemove'
+          ),
+          onAddOnly: game.i18n.localize(
+            'Settings.ShowChatMessageEffectDescriptionOnAddOnly'
+          ),
+          never: game.i18n.localize(
+            'Settings.ShowChatMessageEffectDescriptionNever'
+          ),
         },
         type: String,
       }
@@ -123,14 +137,18 @@ export default class Settings {
       Constants.MODULE_ID,
       Settings.STATUS_EFFECTS_SORT_ORDER,
       {
-        name: 'Status Effects Sort Order',
-        hint: 'This is how status effects are sorted in the token HUD. Requires a Foundry reload on change.',
+        name: game.i18n.localize('Settings.StatusEffectsSortOrder'),
+        hint: game.i18n.localize('Settings.StatusEffectsSortOrderHint'),
         scope: 'world',
         config: true,
-        default: 'none',
+        default: 'byOrderAdded',
         choices: {
-          byOrderAdded: 'By Order Added',
-          alphabetical: 'Alphabetical',
+          byOrderAdded: game.i18n.localize(
+            'Settings.StatusEffectsSortOrderByOrderAdded'
+          ),
+          alphabetical: game.i18n.localize(
+            'Settings.StatusEffectsSortOrderAlphabetical'
+          ),
         },
         type: String,
         requiresReload: true,
@@ -141,8 +159,8 @@ export default class Settings {
       Constants.MODULE_ID,
       Settings.ALLOW_PLAYER_CUSTOM_EFFECTS,
       {
-        name: 'Allow Player Custom Effects',
-        hint: 'If enabled, players will be allowed to create, duplicate, edit, and delete all custom effects.',
+        name: game.i18n.localize('Settings.AllowPlayerCustomEffects'),
+        hint: game.i18n.localize('Settings.AllowPlayerCustomEffectsHint'),
         scope: 'world',
         config: true,
         default: false,
@@ -160,8 +178,8 @@ export default class Settings {
     );
 
     game.settings.register(Constants.MODULE_ID, Settings.INTEGRATE_WITH_ATE, {
-      name: 'Integrate with ATE',
-      hint: 'If enabled, certain effects will also change light emitted from tokens or the size of a token via Active Token Effects.',
+      name: game.i18n.localize('Settings.IntegratewithATE'),
+      hint: game.i18n.localize('Settings.IntegratewithATEHint'),
       scope: 'world',
       config: true,
       default: true,
@@ -172,8 +190,8 @@ export default class Settings {
       Constants.MODULE_ID,
       Settings.INTEGRATE_WITH_TOKEN_MAGIC,
       {
-        name: 'Integrate with Token Magic',
-        hint: 'If enabled, certain effects will also apply a token magic filter to tokens via Token Magic.',
+        name: game.i18n.localize('Settings.IntegratewithTokenMagic'),
+        hint: game.i18n.localize('Settings.IntegratewithTokenMagic'),
         scope: 'world',
         config: true,
         default: true,
@@ -182,8 +200,8 @@ export default class Settings {
     );
 
     game.settings.register(Constants.MODULE_ID, Settings.PRIORITIZE_TARGETS, {
-      name: 'Prioritize Targets',
-      hint: 'If enabled, effects will be applied to any targeted tokens instead of selected tokens.',
+      name: game.i18n.localize('Settings.PrioritizeTargets'),
+      hint: game.i18n.localize('Settings.PrioritizeTargetsHint'),
       scope: 'client',
       config: true,
       default: false,
@@ -191,8 +209,8 @@ export default class Settings {
     });
 
     game.settings.register(Constants.MODULE_ID, Settings.SHOW_NESTED_EFFECTS, {
-      name: 'Show Nested Effects',
-      hint: 'If enabled, nested effects will be shown in the application.',
+      name: game.i18n.localize('Settings.ShowNestedEffects'),
+      hint: game.i18n.localize('Settings.ShowNestedEffectsHint'),
       scope: 'client',
       config: true,
       default: false,
@@ -244,27 +262,27 @@ export default class Settings {
 
   get _defaultStatusEffectNames() {
     return [
-      'Blinded',
-      'Charmed',
-      'Concentrating',
-      'Dead',
-      'Deafened',
-      'Exhaustion 1',
-      'Exhaustion 2',
-      'Exhaustion 3',
-      'Exhaustion 4',
-      'Exhaustion 5',
-      'Frightened',
-      'Grappled',
-      'Incapacitated',
-      'Invisible',
-      'Paralyzed',
-      'Petrified',
-      'Poisoned',
-      'Prone',
-      'Restrained',
-      'Stunned',
-      'Unconscious',
+      game.i18n.localize('Settings.Blinded'),
+      game.i18n.localize('Settings.Charmed'),
+      game.i18n.localize('Settings.Concentrating'),
+      game.i18n.localize('Settings.Dead'),
+      game.i18n.localize('Settings.Deafened'),
+      game.i18n.localize('Settings.Exhaustion1'),
+      game.i18n.localize('Settings.Exhaustion2'),
+      game.i18n.localize('Settings.Exhaustion3'),
+      game.i18n.localize('Settings.Exhaustion4'),
+      game.i18n.localize('Settings.Exhaustion5'),
+      game.i18n.localize('Settings.Frightened'),
+      game.i18n.localize('Settings.Grappled'),
+      game.i18n.localize('Settings.Incapacitated'),
+      game.i18n.localize('Settings.Invisible'),
+      game.i18n.localize('Settings.Paralyzed'),
+      game.i18n.localize('Settings.Petrified'),
+      game.i18n.localize('Settings.Poisoned'),
+      game.i18n.localize('Settings.Prone'),
+      game.i18n.localize('Settings.Restrained'),
+      game.i18n.localize('Settings.Stunned'),
+      game.i18n.localize('Settings.Unconscious'),
     ];
   }
 
