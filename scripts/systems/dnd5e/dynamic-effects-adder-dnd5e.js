@@ -19,16 +19,16 @@ export default class DynamicEffectsAdderDnd5e {
    */
   async addDynamicEffects(effect, actor) {
     switch (effect.name.toLowerCase()) {
-      case 'divine word':
+      case "divine word":
         await this._addDivineWordEffects(effect, actor);
         break;
-      case 'enlarge':
+      case "enlarge":
         this._addEnlargeEffects(effect, actor);
         break;
-      case 'rage':
+      case "rage":
         this._addRageEffects(effect, actor);
         break;
-      case 'reduce':
+      case "reduce":
         this._addReduceEffects(effect, actor);
         break;
     }
@@ -40,52 +40,52 @@ export default class DynamicEffectsAdderDnd5e {
 
     if (remainingHp <= 20) {
       await actor.update({
-        'system.attributes.hp.value': 0,
+        "system.attributes.hp.value": 0,
       });
       await game.dfreds.effectInterface.addEffect({
-        effectName: 'Dead',
+        effectName: "Dead",
         uuid: actor.uuid,
         overlay: true,
       });
-      effect.description = 'Killed instantly';
+      effect.description = "Killed instantly";
     } else if (remainingHp <= 30) {
       await game.dfreds.effectInterface.addEffect({
-        effectName: 'Blinded',
+        effectName: "Blinded",
         uuid: actor.uuid,
         origin,
       });
       await game.dfreds.effectInterface.addEffect({
-        effectName: 'Deafened',
+        effectName: "Deafened",
         uuid: actor.uuid,
         origin,
       });
       await game.dfreds.effectInterface.addEffect({
-        effectName: 'Stunned',
+        effectName: "Stunned",
         uuid: actor.uuid,
         origin,
       });
-      effect.description = 'Blinded, deafened, and stunned for 1 hour';
+      effect.description = "Blinded, deafened, and stunned for 1 hour";
       effect.duration.seconds = Constants.SECONDS.IN_ONE_HOUR;
     } else if (remainingHp <= 40) {
       await game.dfreds.effectInterface.addEffect({
-        effectName: 'Blinded',
+        effectName: "Blinded",
         uuid: actor.uuid,
         origin,
       });
       await game.dfreds.effectInterface.addEffect({
-        effectName: 'Deafened',
+        effectName: "Deafened",
         uuid: actor.uuid,
         origin,
       });
-      effect.description = 'Deafened and blinded for 10 minutes';
+      effect.description = "Deafened and blinded for 10 minutes";
       effect.duration.seconds = Constants.SECONDS.IN_TEN_MINUTES;
     } else if (remainingHp <= 50) {
       await game.dfreds.effectInterface.addEffect({
-        effectName: 'Deafened',
+        effectName: "Deafened",
         uuid: actor.uuid,
         origin,
       });
-      effect.description = 'Deafened for 1 minute';
+      effect.description = "Deafened for 1 minute";
       effect.duration.seconds = Constants.SECONDS.IN_ONE_MINUTE;
     }
   }
@@ -112,7 +112,7 @@ export default class DynamicEffectsAdderDnd5e {
     const tokenSize = game.dnd5e.config.tokenSizes[size];
 
     effect.changes.push({
-      key: 'system.traits.size',
+      key: "system.traits.size",
       mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
       value: size,
     });
@@ -121,12 +121,12 @@ export default class DynamicEffectsAdderDnd5e {
       effect.changes.push(
         ...[
           {
-            key: 'ATL.width',
+            key: "ATL.width",
             mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
             value: tokenSize,
           },
           {
-            key: 'ATL.height',
+            key: "ATL.height",
             mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
             value: tokenSize,
           },
@@ -137,11 +137,13 @@ export default class DynamicEffectsAdderDnd5e {
 
   _addRageEffects(effect, actor) {
     const barbarianClass = actor.items.find(
-      (item) => item.type === 'class' && item.name === 'Barbarian'
+      (item) =>
+        item.type === "class" &&
+        item.name === game.i18n.localize("TIDY5E.Class.Barbarian")
     );
 
     if (!barbarianClass) {
-      ui.notifications.warn('Selected actor is not a Barbarian');
+      ui.notifications.warn("Selected actor is not a Barbarian");
       return;
     }
 
@@ -151,63 +153,66 @@ export default class DynamicEffectsAdderDnd5e {
 
   _addResistancesIfBearTotem(effect, actor, barbarianClass) {
     const isTotemWarrior =
-      barbarianClass.subclass?.identifier === 'path-of-the-totem-warrior';
+      barbarianClass.subclass?.identifier === "path-of-the-totem-warrior";
     const hasBearTotemSpirit = actor.items.find(
-      (item) => item.type === 'feat' && item.name === 'Totem Spirit: Bear'
+      (item) =>
+        item.type === "feat" &&
+        (item.name === "Esprit totem (Hibours)" ||
+          item.name === "Esprit totem (Ours)")
     );
 
     if (isTotemWarrior && hasBearTotemSpirit) {
       effect.changes.push(
         ...[
           {
-            key: 'system.traits.dr.value',
+            key: "system.traits.dr.value",
             mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: 'acid',
+            value: "acid",
           },
           {
-            key: 'system.traits.dr.value',
+            key: "system.traits.dr.value",
             mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: 'cold',
+            value: "cold",
           },
           {
-            key: 'system.traits.dr.value',
+            key: "system.traits.dr.value",
             mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: 'fire',
+            value: "fire",
           },
           {
-            key: 'system.traits.dr.value',
+            key: "system.traits.dr.value",
             mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: 'force',
+            value: "force",
           },
           {
-            key: 'system.traits.dr.value',
+            key: "system.traits.dr.value",
             mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: 'lightning',
+            value: "lightning",
           },
           {
-            key: 'system.traits.dr.value',
+            key: "system.traits.dr.value",
             mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: 'necrotic',
+            value: "necrotic",
           },
           {
-            key: 'system.traits.dr.value',
+            key: "system.traits.dr.value",
             mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: 'poison',
+            value: "poison",
           },
           {
-            key: 'system.traits.dr.value',
+            key: "system.traits.dr.value",
             mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: 'physical',
+            value: "physical",
           },
           {
-            key: 'system.traits.dr.value',
+            key: "system.traits.dr.value",
             mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: 'radiant',
+            value: "radiant",
           },
           {
-            key: 'system.traits.dr.value',
+            key: "system.traits.dr.value",
             mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-            value: 'thunder',
+            value: "thunder",
           },
         ]
       );
