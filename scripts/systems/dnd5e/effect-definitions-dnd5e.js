@@ -19,12 +19,18 @@ export default class EffectDefinitionsDnd5e {
   }
 
   initialize() {
-    // Enables caching since this class is initialized a single time
-    this._conditions = this.conditions;
-    this._spells = this.spells;
-    this._classFeatures = this.classFeatures;
-    this._equipment = this.equipment;
-    this._other = this.other;
+    this._conditions = this.conditions.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+    this._spells = this.spells.sort((a, b) => a.name.localeCompare(b.name));
+    this._classFeatures = this.classFeatures.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+    this._equipment = this.equipment.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+    this._other = this.other.sort((a, b) => a.name.localeCompare(b.name));
+
     this._all = [
       ...this._conditions,
       ...this._spells,
@@ -92,6 +98,11 @@ export default class EffectDefinitionsDnd5e {
         this._exhaustion3,
         this._exhaustion4,
         this._exhaustion5,
+        this._exhaustion6,
+        this._exhaustion7,
+        this._exhaustion8,
+        this._exhaustion9,
+        this._exhaustion10,
         this._frightened,
         this._grappled,
         this._incapacitated,
@@ -290,10 +301,8 @@ export default class EffectDefinitionsDnd5e {
   /* Condition Effects */
   get _blinded() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Blinded',
-      description:
-        "- A blinded creature can't see and automatically fails any ability check that requires sight.<br/>- Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage.",
-      icon: 'modules/dfreds-convenient-effects/images/blinded.svg',
+      name: game.i18n.localize('Effects.Blinded'),
+      description: game.i18n.localize('Effects.BlindedDescription'),
       statuses: ['blinded'],
       changes: [
         {
@@ -312,36 +321,34 @@ export default class EffectDefinitionsDnd5e {
 
   get _charmed() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Charmed',
+      name: game.i18n.localize('Effects.Charmed'),
       statuses: ['charmed'],
-      description:
-        "- A charmed creature can't attack the charmer or target the charmer with harmful abilities or magical effects.<br/>- The charmer has advantage on any ability check to interact socially with the creature.",
+      description: game.i18n.localize('Effects.CharmedDescription'),
       icon: 'modules/dfreds-convenient-effects/images/charmed.svg',
     });
   }
 
   get _concentrating() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Concentrating',
+      name: game.i18n.localize('Effects.Concentrating'),
       statuses: ['concentrating'],
-      description:
-        'Some Spells require you to maintain Concentration in order to keep their magic active. If you lose Concentration, such a spell ends.',
+      description: game.i18n.localize('Effects.ConcentratingDescription'),
       icon: 'modules/dfreds-convenient-effects/images/concentrating.svg',
     });
   }
 
   get _dead() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Dead',
+      name: game.i18n.localize('Effects.Dead'),
       statuses: ['dead'],
-      description: 'No active effects',
+      description: game.i18n.localize('Effects.DeadDescription'),
       icon: 'icons/svg/skull.svg',
     });
   }
 
   get _deafened() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Deafened',
+      name: game.i18n.localize('Effects.Deafened'),
       statuses: ['deafened'],
       description:
         "- A deafened creature can't hear and automatically fails any ability check that requires hearing.",
@@ -351,9 +358,9 @@ export default class EffectDefinitionsDnd5e {
 
   get _exhaustion1() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Exhaustion 1',
+      name: game.i18n.localize('Effects.Exhaustion') + ' 1',
       statuses: ['exhaustion'],
-      description: 'Disadvantage on ability checks',
+      description: '-1 to all ability checks',
       icon: 'modules/dfreds-convenient-effects/images/exhaustion1.svg',
       flags: {
         dnd5e: {
@@ -362,19 +369,19 @@ export default class EffectDefinitionsDnd5e {
       },
       changes: [
         {
-          key: 'system.attributes.exhaustion',
-          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '1',
+          key: `system.bonuses.abilities.check`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-1',
         },
         {
-          key: `flags.${this._flagPrefix}.disadvantage.ability.check.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
+          key: `system.bonuses.abilities.save`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-1',
         },
         {
-          key: 'flags.dnd5e.initiativeDisadv',
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
+          key: `system.bonuses.All-Attacks`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-1',
         },
       ],
     });
@@ -382,36 +389,25 @@ export default class EffectDefinitionsDnd5e {
 
   get _exhaustion2() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Exhaustion 2',
+      name: game.i18n.localize('Effects.Exhaustion') + ' 2',
       statuses: ['exhaustion'],
-      description: 'Disadvantage on ability checks and speed halved',
-      icon: 'modules/dfreds-convenient-effects/images/exhaustion2.svg',
-      flags: {
-        dnd5e: {
-          exhaustionLevel: 2,
-        },
-      },
+      description: '-2 to all ability checks',
+      icon: 'modules/dfreds-convenient-effects/images/exhaustion1.svg',
       changes: [
         {
-          key: 'system.attributes.exhaustion',
-          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '2',
+          key: `system.bonuses.abilities.check`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-2',
         },
         {
-          key: `flags.${this._flagPrefix}.disadvantage.ability.check.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
+          key: `system.bonuses.abilities.save`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-2',
         },
         {
-          key: 'flags.dnd5e.initiativeDisadv',
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: 'system.attributes.movement.all',
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '*0.5',
-          priority: 25,
+          key: `system.bonuses.All-Attacks`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-2',
         },
       ],
     });
@@ -419,47 +415,25 @@ export default class EffectDefinitionsDnd5e {
 
   get _exhaustion3() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Exhaustion 3',
+      name: game.i18n.localize('Effects.Exhaustion') + ' 3',
       statuses: ['exhaustion'],
-      description:
-        'Disadvantage on ability checks, speed halved, and disadvantage on attacks and saving throws',
-      icon: 'modules/dfreds-convenient-effects/images/exhaustion3.svg',
-      flags: {
-        dnd5e: {
-          exhaustionLevel: 3,
-        },
-      },
+      description: '-3 to all ability checks',
+      icon: 'modules/dfreds-convenient-effects/images/exhaustion2.svg',
       changes: [
         {
-          key: 'system.attributes.exhaustion',
-          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '3',
+          key: `system.bonuses.abilities.check`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-3',
         },
         {
-          key: `flags.${this._flagPrefix}.disadvantage.ability.check.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
+          key: `system.bonuses.abilities.save`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-3',
         },
         {
-          key: 'flags.dnd5e.initiativeDisadv',
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: 'system.attributes.movement.all',
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '*0.5',
-          priority: 25,
-        },
-        {
-          key: `flags.${this._flagPrefix}.disadvantage.attack.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: `flags.${this._flagPrefix}.disadvantage.ability.save.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
+          key: `system.bonuses.All-Attacks`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-3',
         },
       ],
     });
@@ -467,53 +441,25 @@ export default class EffectDefinitionsDnd5e {
 
   get _exhaustion4() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Exhaustion 4',
+      name: game.i18n.localize('Effects.Exhaustion') + ' 4',
       statuses: ['exhaustion'],
-      description:
-        'Disadvantage on ability checks, speed halved, disadvantage on attacks and saving throws, and hit point maximum halved',
-      icon: 'modules/dfreds-convenient-effects/images/exhaustion4.svg',
-      flags: {
-        dnd5e: {
-          exhaustionLevel: 4,
-        },
-      },
+      description: '-4 to all ability checks',
+      icon: 'modules/dfreds-convenient-effects/images/exhaustion2.svg',
       changes: [
         {
-          key: 'system.attributes.exhaustion',
-          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '4',
+          key: `system.bonuses.abilities.check`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-4',
         },
         {
-          key: `flags.${this._flagPrefix}.disadvantage.ability.check.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
+          key: `system.bonuses.abilities.save`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-4',
         },
         {
-          key: 'flags.dnd5e.initiativeDisadv',
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: 'system.attributes.movement.all',
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '*0.5',
-          priority: 25,
-        },
-        {
-          key: `flags.${this._flagPrefix}.disadvantage.attack.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: `flags.${this._flagPrefix}.disadvantage.ability.save.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: 'system.attributes.hp.max',
-          mode: CONST.ACTIVE_EFFECT_MODES.MULTIPLY,
-          value: '0.5',
-          priority: 5,
+          key: `system.bonuses.All-Attacks`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-4',
         },
       ],
     });
@@ -521,10 +467,113 @@ export default class EffectDefinitionsDnd5e {
 
   get _exhaustion5() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Exhaustion 5',
+      name: game.i18n.localize('Effects.Exhaustion') + ' 5',
       statuses: ['exhaustion'],
-      description:
-        'Disadvantage on ability checks, speed reduced to 0, disadvantage on attacks and saving throws, and hit point maximum halved',
+      description: '-5 to all ability checks',
+      icon: 'modules/dfreds-convenient-effects/images/exhaustion3.svg',
+      changes: [
+        {
+          key: `system.bonuses.abilities.check`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-5',
+        },
+        {
+          key: `system.bonuses.abilities.save`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-5',
+        },
+        {
+          key: `system.bonuses.All-Attacks`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-5',
+        },
+      ],
+    });
+  }
+
+  get _exhaustion6() {
+    return this._effectHelpers.createActiveEffect({
+      name: game.i18n.localize('Effects.Exhaustion') + ' 6',
+      statuses: ['exhaustion'],
+      description: '-6 to all ability checks',
+      icon: 'modules/dfreds-convenient-effects/images/exhaustion3.svg',
+      changes: [
+        {
+          key: `system.bonuses.abilities.check`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-6',
+        },
+        {
+          key: `system.bonuses.abilities.save`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-6',
+        },
+        {
+          key: `system.bonuses.All-Attacks`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-6',
+        },
+      ],
+    });
+  }
+
+  get _exhaustion7() {
+    return this._effectHelpers.createActiveEffect({
+      name: game.i18n.localize('Effects.Exhaustion') + ' 7',
+      statuses: ['exhaustion'],
+      description: '-7 to all ability checks',
+      icon: 'modules/dfreds-convenient-effects/images/exhaustion4.svg',
+      changes: [
+        {
+          key: `system.bonuses.abilities.check`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-7',
+        },
+        {
+          key: `system.bonuses.abilities.save`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-7',
+        },
+        {
+          key: `system.bonuses.All-Attacks`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-7',
+        },
+      ],
+    });
+  }
+
+  get _exhaustion8() {
+    return this._effectHelpers.createActiveEffect({
+      name: game.i18n.localize('Effects.Exhaustion') + ' 8',
+      statuses: ['exhaustion'],
+      description: '-8 to all ability checks',
+      icon: 'modules/dfreds-convenient-effects/images/exhaustion4.svg',
+      changes: [
+        {
+          key: `system.bonuses.abilities.check`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-8',
+        },
+        {
+          key: `system.bonuses.abilities.save`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-8',
+        },
+        {
+          key: `system.bonuses.All-Attacks`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-8',
+        },
+      ],
+    });
+  }
+
+  get _exhaustion9() {
+    return this._effectHelpers.createActiveEffect({
+      name: game.i18n.localize('Effects.Exhaustion') + ' 9',
+      statuses: ['exhaustion'],
+      description: '-9 to all ability checks',
       icon: 'modules/dfreds-convenient-effects/images/exhaustion5.svg',
       flags: {
         dnd5e: {
@@ -533,41 +582,45 @@ export default class EffectDefinitionsDnd5e {
       },
       changes: [
         {
-          key: 'system.attributes.exhaustion',
-          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
-          value: '5',
+          key: `system.bonuses.abilities.check`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-9',
         },
         {
-          key: `flags.${this._flagPrefix}.disadvantage.ability.check.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
+          key: `system.bonuses.abilities.save`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-9',
         },
         {
-          key: 'flags.dnd5e.initiativeDisadv',
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
+          key: `system.bonuses.All-Attacks`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-9',
+        },
+      ],
+    });
+  }
+
+  get _exhaustion10() {
+    return this._effectHelpers.createActiveEffect({
+      name: game.i18n.localize('Effects.Exhaustion') + ' 10',
+      statuses: ['exhaustion'],
+      description: '-10 to all ability checks',
+      icon: 'modules/dfreds-convenient-effects/images/exhaustion5.svg',
+      changes: [
+        {
+          key: `system.bonuses.abilities.check`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-10',
         },
         {
-          key: 'system.attributes.movement.all',
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '0',
-          priority: 25,
+          key: `system.bonuses.abilities.save`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-10',
         },
         {
-          key: `flags.${this._flagPrefix}.disadvantage.attack.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: `flags.${this._flagPrefix}.disadvantage.ability.save.all`,
-          mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-          value: '1',
-        },
-        {
-          key: 'system.attributes.hp.max',
-          mode: CONST.ACTIVE_EFFECT_MODES.MULTIPLY,
-          value: '0.5',
-          priority: 5,
+          key: `system.bonuses.All-Attacks`,
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: '-10',
         },
       ],
     });
@@ -575,7 +628,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _frightened() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Frightened',
+      name: game.i18n.localize('Effects.Frightened'),
       statuses: ['frightened'],
       description:
         "- A frightened creature has disadvantage on ability checks and attack rolls while the source of its fear is within line of sight.<br/>- The creature can't willingly move closer to the source of its fear.",
@@ -597,7 +650,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _grappled() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Grappled',
+      name: game.i18n.localize('Effects.Grappled'),
       statuses: ['grappled'],
       description:
         "- A grappled creature's speed becomes 0, and it can't benefit from any bonus to its speed.<br/>- The condition ends if the grappler is incapacitated.<br/>- The condition also ends if an effect removes the grappled creature from the reach of the grappler or grappling effect.",
@@ -615,7 +668,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _incapacitated() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Incapacitated',
+      name: game.i18n.localize('Effects.Incapacitated'),
       statuses: ['incapacitated'],
       description:
         "- An incapacitated creature can't take actions or reactions",
@@ -625,7 +678,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _invisible() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Invisible',
+      name: game.i18n.localize('Effects.Invisible'),
       statuses: ['invisible'],
       description:
         "- An invisible creature is impossible to see without the aid of magic or a special sense. For the purpose of hiding, the creature is heavily obscured. The creature's location can be detected by any noise it makes or any tracks it leaves.<br/>- Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage.",
@@ -647,7 +700,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _paralyzed() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Paralyzed',
+      name: game.i18n.localize('Effects.Paralyzed'),
       description:
         "- A paralyzed creature is incapacitated (see the condition) and can't move or speak.<br/>- The creature automatically fails Strength and Dexterity saving throws. Attack rolls against the creature have advantage.<br/>- Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature.",
       icon: 'modules/dfreds-convenient-effects/images/paralyzed.svg',
@@ -686,7 +739,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _petrified() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Petrified',
+      name: game.i18n.localize('Effects.Petrified'),
       statuses: ['petrified', 'incapacitated'],
       description:
         "- A petrified creature is transformed, along with any nonmagical object it is wearing or carrying, into a solid inanimate substance (usually stone). Its weight increases by a factor of ten, and it ceases aging.<br/>- The creature is incapacitated (see the condition), can't move or speak, and is unaware of its surroundings.<br/>- Attack rolls against the creature have advantage.<br/>- The creature automatically fails Strength and Dexterity saving throws.<br/>- The creature has resistance to all damage.<br/>- The creature is immune to poison and disease, although a poison or disease already in its system is suspended, not neutralized. Remove all movement, grant advantage to all who attack, and add damage resistance to all magical and physical attacks",
@@ -735,7 +788,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _poisoned() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Poisoned',
+      name: game.i18n.localize('Effects.Poisoned'),
       statuses: ['poisoned'],
       description:
         '- A poisoned creature has disadvantage on attack rolls and ability checks.',
@@ -757,7 +810,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _prone() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Prone',
+      name: game.i18n.localize('Effects.Prone'),
       statuses: ['prone'],
       description:
         "- A prone creature's only movement option is to crawl, unless it stands up and thereby ends the condition.<br/>- The creature has disadvantage on attack rolls.<br/>- An attack roll against the creature has advantage if the attacker is within 5 feet of the creature. Otherwise, the attack roll has disadvantage.",
@@ -800,7 +853,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _restrained() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Restrained',
+      name: game.i18n.localize('Effects.Restrained'),
       statuses: ['restrained'],
       description:
         "- A restrained creature's speed becomes 0, and it can't benefit from any bonus to its speed.<br/>- Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage.<br/>- The creature has disadvantage on Dexterity saving throws.",
@@ -833,7 +886,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _stunned() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Stunned',
+      name: game.i18n.localize('Effects.Stunned'),
       statuses: ['stunned', 'incapacitated'],
       description:
         "- A stunned creature is incapacitated (see the condition), can't move, and can speak only falteringly.<br/>- The creature automatically fails Strength and Dexterity saving throws.<br/>- Attack rolls against the creature have advantage.",
@@ -862,7 +915,7 @@ export default class EffectDefinitionsDnd5e {
   get _unconscious() {
     return this._effectHelpers.createActiveEffect({
       statuses: ['unconscious', 'incapacitated', 'prone'],
-      name: 'Unconscious',
+      name: game.i18n.localize('Effects.Unconscious'),
       description:
         "- An unconscious creature is incapacitated (See the condition) can't move or speak, and is unaware of its surroundings.<br/>- The creature drops whatever its holding and falls prone (See the condition).<br/>- The creature automatically fails Strength and Dexterity saving throws.<br/>- Attack rolls against the creature have advantage.<br/>- Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature.",
       icon: 'icons/svg/unconscious.svg',
@@ -901,7 +954,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _wounded() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Wounded',
+      name: game.i18n.localize('Effects.Wounded'),
       description: 'No active effects',
       icon: 'modules/dfreds-convenient-effects/images/wounded.svg',
     });
@@ -910,7 +963,7 @@ export default class EffectDefinitionsDnd5e {
   /* Spell Effects */
   get _acidArrow() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Acid Arrow',
+      name: game.i18n.localize('Effects.AcidArrow'),
       description: 'Causes 2d4 acid damage at the end of next turn',
       icon: 'icons/magic/acid/projectile-bolts-salvo-green.webp',
       changes: [
@@ -926,7 +979,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _aid() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Aid',
+      name: game.i18n.localize('Effects.Aid'),
       description: 'Add to current and maximum hit points for 8 hours',
       icon: 'icons/magic/life/heart-cross-blue.webp',
       seconds: Constants.SECONDS.IN_EIGHT_HOURS,
@@ -935,7 +988,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _alterSelf() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Alter Self',
+      name: game.i18n.localize('Effects.AlterSelf'),
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/magic/control/debuff-energy-hold-green.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -944,7 +997,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _antilifeShell() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Antilife Shell',
+      name: game.i18n.localize('Effects.AntilifeShell'),
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-teal.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -953,7 +1006,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _arcaneHand() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Arcane Hand',
+      name: game.i18n.localize('Effects.ArcaneHand'),
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/fire/projectile-fireball-smoke-strong-teal.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -962,7 +1015,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _bane() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Bane',
+      name: game.i18n.localize('Effects.Bane'),
       description:
         'Subtract 1d4 from all saving throws and attack rolls for 1 minute',
       icon: 'icons/magic/unholy/strike-beam-blood-red-purple.webp',
@@ -1000,7 +1053,7 @@ export default class EffectDefinitionsDnd5e {
   get _barkskin() {
     // TODO seems to not work in dnd 3.0.0
     return this._effectHelpers.createActiveEffect({
-      name: 'Barkskin',
+      name: game.i18n.localize('Effects.Barkskin'),
       description: 'Upgrade AC to 16 for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-orange.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -1017,7 +1070,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _beaconOfHope() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Beacon of Hope',
+      name: game.i18n.localize('Effects.BeaconofHope'),
       description:
         'Adds advantage to wisdom saving throws and death saving throws for 1 minute',
       icon: 'icons/magic/light/explosion-star-large-blue-yellow.webp',
@@ -1039,7 +1092,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _blackTentacles() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Black Tentacles',
+      name: game.i18n.localize('Effects.BlackTentacles'),
       description: 'Apply the effects of the restrained condition for 1 minute',
       icon: 'icons/magic/nature/vines-thorned-curled-glow-teal-purple.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1049,7 +1102,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _bless() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Bless',
+      name: game.i18n.localize('Effects.Bless'),
       description: 'Add 1d4 to all saving throws and attack rolls for 1 minute',
       icon: 'icons/magic/control/buff-flight-wings-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1092,7 +1145,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _blindnessDeafness() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Blindness/Deafness',
+      name: game.i18n.localize('Effects.BlindnessDeafness'),
       description: 'Choose between blindness or deafness',
       icon: 'icons/magic/perception/eye-ringed-glow-angry-red.webp',
       nestedEffects: [
@@ -1104,7 +1157,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _blindnessDeafnessBlindness() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Blindness',
+      name: game.i18n.localize('Effects.Blindness'),
       description:
         'Disadvantage on attack rolls while granting advantage to all who attack for 1 minute',
       icon: 'icons/magic/perception/eye-ringed-glow-angry-red.webp',
@@ -1116,7 +1169,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _blindnessDeafnessDeafness() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Deafness',
+      name: game.i18n.localize('Effects.Deafness'),
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/perception/eye-ringed-glow-angry-red.webp',
       isViewable: this._settings.showNestedEffects,
@@ -1127,7 +1180,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _blur() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Blur',
+      name: game.i18n.localize('Effects.Blur'),
       description: 'Grants disadvantage to all who attack for 1 minute',
       icon: 'icons/magic/air/air-burst-spiral-blue-gray.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1150,7 +1203,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _charmPerson() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Charm Person',
+      name: game.i18n.localize('Effects.CharmPerson'),
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/magic/fire/explosion-fireball-medium-purple-pink.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -1160,7 +1213,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _command() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Command',
+      name: game.i18n.localize('Effects.Command'),
       description: 'No active effects and lasts until the end of next turn',
       icon: 'icons/magic/fire/explosion-fireball-small-purple.webp',
       seconds: CONFIG.time.roundTime,
@@ -1170,7 +1223,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _comprehendLanguages() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Comprehend Languages',
+      name: game.i18n.localize('Effects.ComprehendLanguages'),
       description: 'Adds all languages for 1 hour',
       icon: 'icons/magic/symbols/runes-triangle-orange-purple.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -1186,7 +1239,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _contagion() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Contagion',
+      name: game.i18n.localize('Effects.Contagion'),
       description:
         'Choose between blinding sickness, filth fever, flesh rot, mindfire, seizure, or slimy doom',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1203,7 +1256,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _contagionBlindingSickness() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Blinding Sickness',
+      name: game.i18n.localize('Effects.BlindingSickness'),
       description:
         'Disadvantage on wisdom checks and wisdom saving throws for 7 days',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1227,7 +1280,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _contagionFilthFever() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Filth Fever',
+      name: game.i18n.localize('Effects.FilthFever'),
       description:
         'Disadvantage on strength checks strength saving throws, and attacks that use strength for 7 days',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1255,7 +1308,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _contagionFleshRot() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Flesh Rot',
+      name: game.i18n.localize('Effects.FleshRot'),
       description:
         'Disadvantage on charisma checks and vulnerability to all damage',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1278,7 +1331,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _contagionMindfire() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Mindfire',
+      name: game.i18n.localize('Effects.Mindfire'),
       description:
         'Disadvantage on intelligence checks and intelligence saving throws for 7 days',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1301,7 +1354,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _contagionSeizure() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Seizure',
+      name: game.i18n.localize('Effects.Seizure'),
       description:
         'Disadvantage on dexterity checks, dexterity saving throws, and attacks that use dexterity for 7 days',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1329,7 +1382,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _contagionSlimyDoom() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Slimy Doom',
+      name: game.i18n.localize('Effects.SlimyDoom'),
       description:
         'Disadvantage on constitution checks and constitution saving throws for 7 days',
       icon: 'icons/magic/unholy/strike-beam-blood-large-red-purple.webp',
@@ -1352,7 +1405,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _darkvision() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Darkvision',
+      name: game.i18n.localize('Effects.Darkvision'),
       description: 'Upgrade darkvision to 60 ft. for 8 hours',
       icon: 'icons/magic/perception/eye-ringed-glow-angry-small-red.webp',
       seconds: Constants.SECONDS.IN_EIGHT_HOURS,
@@ -1383,7 +1436,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _disguiseSelf() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Disguise Self',
+      name: game.i18n.localize('Effects.DisguiseSelf'),
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/magic/control/debuff-energy-hold-teal-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -1392,7 +1445,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _divineFavor() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Divine Favor',
+      name: game.i18n.localize('Effects.DivineFavor'),
       description: 'Add 1d4 radiant damage to weapon attacks for 1 minute',
       icon: 'icons/magic/fire/dagger-rune-enchant-flame-blue-yellow.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1408,7 +1461,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _divineWord() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Divine Word',
+      name: game.i18n.localize('Effects.DivineWord'),
       description: 'Adds various effects based on the remaining hit points',
       icon: 'icons/magic/light/explosion-star-large-orange-purple.webp',
       isDynamic: true,
@@ -1417,7 +1470,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _enhanceAbility() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Enhance Ability',
+      name: game.i18n.localize('Effects.EnhanceAbility'),
       description:
         "Choose between Bear's Endurance, Bull's Strength, Cat's Grace, Eagle's Splendor, Fox's Cunning, or Owl's Wisdom",
       icon: 'icons/magic/control/buff-flight-wings-runes-purple.webp',
@@ -1544,7 +1597,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _enlargeReduce() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Enlarge/Reduce',
+      name: game.i18n.localize('Effects.EnlargeReduce'),
       description: 'Choose between Enlarge or Reduce',
       icon: 'icons/magic/control/energy-stream-link-large-blue.webp',
       nestedEffects: [
@@ -1556,7 +1609,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _enlargeReduceEnlarge() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Enlarge',
+      name: game.i18n.localize('Effects.Enlarge'),
       description:
         'Add 1d4 to damage and advantage on strength checks and strength saving throws for 1 minute',
       icon: 'icons/magic/control/energy-stream-link-large-blue.webp',
@@ -1585,7 +1638,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _enlargeReduceReduce() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Reduce',
+      name: game.i18n.localize('Effects.Reduce'),
       description:
         'Subtract 1d4 from damage and disadvantage on strength checks and strength saving throws for 1 minute',
       icon: 'icons/magic/control/energy-stream-link-large-blue.webp',
@@ -1614,7 +1667,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _faerieFire() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Faerie Fire',
+      name: game.i18n.localize('Effects.FaerieFire'),
       description: 'Grants advantage to all who attack for 1 minute',
       icon: 'icons/magic/fire/projectile-meteor-salvo-strong-teal.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1659,7 +1712,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _falseLife() {
     return this._effectHelpers.createActiveEffect({
-      name: 'False Life',
+      name: game.i18n.localize('Effects.FalseLife'),
       description: 'Add temporary hit points 1 hour',
       icon: 'icons/magic/life/heart-cross-purple-orange.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -1668,7 +1721,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _featherFall() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Feather Fall',
+      name: game.i18n.localize('Effects.FeatherFall'),
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/air/wind-swirl-pink-purple.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1677,7 +1730,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _feeblemind() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Feeblemind',
+      name: game.i18n.localize('Effects.Feeblemind'),
       description: 'Set intelligence and charisma scores to 1 until removed',
       icon: 'icons/magic/light/explosion-star-large-teal-purple.webp',
       changes: [
@@ -1699,7 +1752,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _fireShield() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Fire Shield',
+      name: game.i18n.localize('Effects.FireShield'),
       description: 'Choose between cold or fire resistance',
       icon: 'icons/magic/defensive/shield-barrier-flaming-pentagon-red.webp',
       nestedEffects: [
@@ -1711,7 +1764,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _fireShieldColdResistance() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Fire Shield (Cold Resistance)',
+      name: game.i18n.localize('Effects.FireShieldColdResistance'),
       description: 'Add damage resistance to cold for 10 minutes',
       icon: 'icons/magic/defensive/shield-barrier-flaming-pentagon-red.webp',
       isViewable: this._settings.showNestedEffects,
@@ -1762,7 +1815,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _fireShieldFireResistance() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Fire Shield (Fire Resistance)',
+      name: game.i18n.localize('Effects.FireShieldFireResistance'),
       description: 'Add damage resistance to fire for 10 minutes',
       icon: 'icons/magic/defensive/shield-barrier-flaming-pentagon-blue.webp',
       isViewable: this._settings.showNestedEffects,
@@ -1813,7 +1866,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _findThePath() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Find the Path',
+      name: game.i18n.localize('Effects.FindthePath'),
       description: 'No active effects and lasts for 1 day',
       icon: 'icons/magic/light/explosion-star-teal.webp',
       seconds: Constants.SECONDS.IN_ONE_DAY,
@@ -1822,7 +1875,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _fly() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Fly',
+      name: game.i18n.localize('Effects.Fly'),
       description: 'Upgrade flying speed to 60 ft. for 10 minutes',
       icon: 'icons/magic/control/energy-stream-link-white.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -1840,7 +1893,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _foresight() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Foresight',
+      name: game.i18n.localize('Effects.Foresight'),
       description:
         'Grants advantage on attack rolls, ability checks, and saving throws while granting disadvantage to all who attack for 8 hours',
       icon: 'icons/magic/perception/eye-ringed-glow-angry-large-teal.webp',
@@ -1877,7 +1930,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _freedomOfMovement() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Freedom of Movement',
+      name: game.i18n.localize('Effects.FreedomofMovement'),
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/skills/melee/strike-blade-knife-white-red.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -1886,7 +1939,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _globeOfInvulnerability() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Globe of Invulnerability',
+      name: game.i18n.localize('Effects.GlobeofInvulnerability'),
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/defensive/shield-barrier-flaming-pentagon-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1902,7 +1955,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _greaterInvisibility() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Greater Invisibility',
+      name: game.i18n.localize('Effects.GreaterInvisibility'),
       description:
         'Grants advantage on attack rolls while forcing disadvantage to all who attack for 1 minute',
       icon: 'icons/magic/air/fog-gas-smoke-swirling-gray.webp',
@@ -1914,7 +1967,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _guidance() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Guidance',
+      name: game.i18n.localize('Effects.Guidance'),
       description: 'Adds 1d4 to one ability or skill check for 1 minute',
       icon: 'icons/magic/control/buff-flight-wings-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -1940,7 +1993,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _guidingBolt() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Guiding Bolt',
+      name: game.i18n.localize('Effects.GuidingBolt'),
       description:
         'Grants advantage to next attacker or until the end of next turn',
       icon: 'icons/magic/fire/projectile-fireball-smoke-large-blue.webp',
@@ -1963,7 +2016,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _haste() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Haste',
+      name: game.i18n.localize('Effects.Haste'),
       description:
         'Double speed, add 2 to AC, and advantage on dexterity saving throws for 1 minute',
       icon: 'icons/magic/control/buff-flight-wings-runes-purple.webp',
@@ -2018,7 +2071,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _heroism() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Heroism',
+      name: game.i18n.localize('Effects.Heroism'),
       description: 'Immunity to frightened for 1 minute',
       icon: 'icons/magic/life/heart-cross-strong-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2034,7 +2087,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _hideousLaughter() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Hideous Laughter',
+      name: game.i18n.localize('Effects.HideousLaughter'),
       description:
         'Apply the effects of the prone and incapacitated conditions for 1 minute',
       icon: 'icons/magic/fire/explosion-fireball-medium-purple-pink.webp',
@@ -2045,7 +2098,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _holdMonster() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Hold Monster',
+      name: game.i18n.localize('Effects.HoldMonster'),
       description: 'Apply the effects of the paralyzed condition for 1 minute',
       icon: 'icons/magic/control/debuff-chains-ropes-red.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2068,7 +2121,7 @@ export default class EffectDefinitionsDnd5e {
   // label=Hold Person
   get _holdPerson() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Hold Person',
+      name: game.i18n.localize('Effects.HoldPerson'),
       description: 'Apply the effects of the paralyzed condition for 1 minute',
       icon: 'icons/magic/control/debuff-chains-ropes-purple.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2085,7 +2138,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _holyAura() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Holy Aura',
+      name: game.i18n.localize('Effects.HolyAura'),
       description:
         'Advantage on saving throws, grant disadvantage to all who attack, and emit dim light in 5 radius (requires ATL) for 1 minute',
       icon: 'icons/magic/control/buff-flight-wings-runes-blue-white.webp',
@@ -2137,7 +2190,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _invisibility() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Invisibility',
+      name: game.i18n.localize('Effects.Invisibility'),
       description:
         'Grants advantage on next attack roll while forcing disadvantage to all who attack for 1 hour. Expires after 1 attack.',
       icon: 'icons/magic/air/fog-gas-smoke-dense-gray.webp',
@@ -2154,7 +2207,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _irresistibleDance() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Irresistible Dance',
+      name: game.i18n.localize('Effects.IrresistibleDance'),
       description:
         'Zero movement, disadvantage on dexterity saving throws, disadvantage on attack rolls, and grants advantage to all who attack for 1 minute',
       icon: 'icons/magic/control/energy-stream-link-large-blue.webp',
@@ -2187,7 +2240,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _jump() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Jump',
+      name: game.i18n.localize('Effects.Jump'),
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/control/debuff-energy-hold-blue-yellow.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2196,7 +2249,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _light() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Light',
+      name: game.i18n.localize('Effects.Light'),
       description: 'Emits 20/40 light for 1 hour (requires ATL)',
       icon: 'icons/magic/light/explosion-star-small-blue-yellow.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2232,7 +2285,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _longstrider() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Longstrider',
+      name: game.i18n.localize('Effects.Longstrider'),
       description: 'Increase all movement by 10 ft. for 1 hour',
       icon: 'icons/magic/air/wind-stream-blue-gray.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2249,7 +2302,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _mageArmor() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Mage Armor',
+      name: game.i18n.localize('Effects.MageArmor'),
       description: 'Upgrades armor to 13 + dex modifier for 8 hours',
       icon: 'icons/magic/defensive/shield-barrier-glowing-triangle-blue.webp',
       seconds: Constants.SECONDS.IN_EIGHT_HOURS,
@@ -2266,7 +2319,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _mindBlank() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Mind Blank',
+      name: game.i18n.localize('Effects.MindBlank'),
       description: 'Adds immunity to psychic damage for 24 hours',
       icon: 'icons/magic/air/air-burst-spiral-large-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_DAY,
@@ -2282,7 +2335,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _mirrorImage() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Mirror Image',
+      name: game.i18n.localize('Effects.MirrorImage'),
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/control/debuff-energy-hold-levitate-pink.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2299,7 +2352,7 @@ export default class EffectDefinitionsDnd5e {
   get _passWithoutTrace() {
     // TODO token magic effects
     return this._effectHelpers.createActiveEffect({
-      name: 'Pass without Trace',
+      name: game.i18n.localize('Effects.PasswithoutTrace'),
       description: 'Add 10 to stealth checks for 1 hour',
       icon: 'icons/magic/air/fog-gas-smoke-brown.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2315,7 +2368,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _protectionFromEnergy() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Protection from Energy',
+      name: game.i18n.localize('Effects.ProtectionfromEnergy'),
       description:
         'Choose between acid, cold, fire, lightning, or thunder resistance',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-teal.webp',
@@ -2332,7 +2385,7 @@ export default class EffectDefinitionsDnd5e {
   get _protectionFromEnergyAcid() {
     // TODO token magic effects
     return this._effectHelpers.createActiveEffect({
-      name: 'Protection from Acid',
+      name: game.i18n.localize('Effects.ProtectionfromAcid'),
       description: 'Adds damage resistance to acid for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-acid.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2350,7 +2403,7 @@ export default class EffectDefinitionsDnd5e {
   get _protectionFromEnergyCold() {
     // TODO token magic effects
     return this._effectHelpers.createActiveEffect({
-      name: 'Protection from Cold',
+      name: game.i18n.localize('Effects.ProtectionfromCold'),
       description: 'Adds damage resistance to cold for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-blue.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2368,7 +2421,7 @@ export default class EffectDefinitionsDnd5e {
   get _protectionFromEnergyFire() {
     // TODO token magic effects
     return this._effectHelpers.createActiveEffect({
-      name: 'Protection from Fire',
+      name: game.i18n.localize('Effects.ProtectionfromFire'),
       description: 'Adds damage resistance to fire for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-red.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2386,7 +2439,7 @@ export default class EffectDefinitionsDnd5e {
   get _protectionFromEnergyLightning() {
     // TODO token magic effects
     return this._effectHelpers.createActiveEffect({
-      name: 'Protection from Lightning',
+      name: game.i18n.localize('Effects.ProtectionfromLightning'),
       description: 'Adds damage resistance to lightning for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-blue-yellow.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2404,7 +2457,7 @@ export default class EffectDefinitionsDnd5e {
   get _protectionFromEnergyThunder() {
     // TODO token magic effects
     return this._effectHelpers.createActiveEffect({
-      name: 'Protection from Thunder',
+      name: game.i18n.localize('Effects.ProtectionfromThunder'),
       description: 'Adds damage resistance to thunder for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-teal-purple.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2422,7 +2475,7 @@ export default class EffectDefinitionsDnd5e {
   get _protectionFromPoison() {
     // TODO token magic effects
     return this._effectHelpers.createActiveEffect({
-      name: 'Protection from Poison',
+      name: game.i18n.localize('Effects.ProtectionfromPoison'),
       description:
         'Adds resistance to poison for 1 hour (does not grant automatic advantage on saving throws against poison)',
       icon: 'icons/magic/defensive/shield-barrier-glowing-triangle-green.webp',
@@ -2439,7 +2492,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _protectionFromEvilAndGood() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Protection from Evil and Good',
+      name: game.i18n.localize('Effects.ProtectionfromEvilandGood'),
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-blue-yellow.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2448,7 +2501,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _rayOfFrost() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Ray of Frost',
+      name: game.i18n.localize('Effects.RayofFrost'),
       description: 'Lowers movement by 10 ft',
       icon: 'icons/magic/light/beam-rays-blue-small.webp',
       seconds: CONFIG.time.roundTime,
@@ -2465,7 +2518,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _regenerate() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Regenerate',
+      name: game.i18n.localize('Effects.Regenerate'),
       description: 'Regain 1 hit point at the start of each turn for 1 hour',
       icon: 'icons/magic/life/heart-cross-strong-flame-green.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2482,7 +2535,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _resilientSphere() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Resilient Sphere',
+      name: game.i18n.localize('Effects.ResilientSphere'),
       description: 'Adds total immunity to all damage and half movement',
       icon: 'icons/magic/light/explosion-star-large-pink.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2504,7 +2557,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _resistance() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Resistance',
+      name: game.i18n.localize('Effects.Resistance'),
       description: 'Add 1d4 to a single saving throw in the next minute',
       icon: 'icons/magic/defensive/shield-barrier-glowing-triangle-orange.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2525,7 +2578,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _shield() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Shield',
+      name: game.i18n.localize('Effects.Shield'),
       description: 'Add 5 to AC until next turn',
       icon: 'icons/magic/defensive/shield-barrier-glowing-triangle-magenta.webp',
       seconds: CONFIG.time.roundTime,
@@ -2554,7 +2607,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _shieldOfFaith() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Shield of Faith',
+      name: game.i18n.localize('Effects.ShieldofFaith'),
       description: 'Adds 2 to the AC for 10 minutes',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-blue-yellow.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2577,7 +2630,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _slow() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Slow',
+      name: game.i18n.localize('Effects.Slow'),
       description:
         'Halves movement and and subtract 2 from AC and dexterity saving throws for 1 minute',
       icon: 'icons/magic/air/fog-gas-smoke-dense-pink.webp',
@@ -2605,7 +2658,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _speakWithAnimals() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Speak with Animals',
+      name: game.i18n.localize('Effects.SpeakwithAnimals'),
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/nature/wolf-paw-glow-small-teal-blue.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2614,7 +2667,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _speakWithDead() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Speak with Dead',
+      name: game.i18n.localize('Effects.SpeakwithDead'),
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/control/fear-fright-shadow-monster-green.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2623,7 +2676,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _speakWithPlants() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Speak with Plants',
+      name: game.i18n.localize('Effects.SpeakwithPlants'),
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/nature/leaf-glow-teal.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2632,7 +2685,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _spiderClimb() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Spider Climb',
+      name: game.i18n.localize('Effects.SpiderClimb'),
       description: 'Grants climbing speed equal to walking speed for 1 hour',
       icon: 'icons/magic/control/debuff-chains-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2649,7 +2702,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _spiritGuardians() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Spirit Guardians',
+      name: game.i18n.localize('Effects.SpiritGuardians'),
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/light/projectile-bolts-salvo-white.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2658,7 +2711,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _spiritualWeapon() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Spiritual Weapon',
+      name: game.i18n.localize('Effects.SpiritualWeapon'),
       description: 'No active effects and lasts for 1 minute',
       icon: 'icons/magic/fire/dagger-rune-enchant-flame-purple.webp',
       seconds: Constants.SECONDS.IN_ONE_MINUTE,
@@ -2668,7 +2721,7 @@ export default class EffectDefinitionsDnd5e {
   get _stoneskin() {
     // TODO token magic effects
     return this._effectHelpers.createActiveEffect({
-      name: 'Stoneskin',
+      name: game.i18n.localize('Effects.Stoneskin'),
       description: 'Adds resistance to non-magical physical damage for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-orange.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2684,7 +2737,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _suggestion() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Suggestion',
+      name: game.i18n.localize('Effects.Suggestion'),
       description: 'No active effects and lasts for 8 hours',
       icon: 'icons/magic/air/air-burst-spiral-pink.webp',
       seconds: Constants.SECONDS.IN_EIGHT_HOURS,
@@ -2693,7 +2746,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _telekinesis() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Telekinesis',
+      name: game.i18n.localize('Effects.Telekinesis'),
       description: 'No active effects and lasts for 10 minutes',
       icon: 'icons/magic/control/debuff-energy-hold-levitate-yellow.webp',
       seconds: Constants.SECONDS.IN_TEN_MINUTES,
@@ -2702,7 +2755,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _trueStrike() {
     return this._effectHelpers.createActiveEffect({
-      name: 'True Strike',
+      name: game.i18n.localize('Effects.TrueStrike'),
       description:
         'Grants advantage on next attack or until the end of next turn',
       icon: 'icons/magic/fire/dagger-rune-enchant-blue-gray.webp',
@@ -2725,7 +2778,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _viciousMockery() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Vicious Mockery',
+      name: game.i18n.localize('Effects.ViciousMockery'),
       description:
         'Grants disadvantage on next attack or until the end of next turn',
       icon: 'icons/skills/toxins/cup-goblet-poisoned-spilled.webp',
@@ -2748,7 +2801,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _wardingBond() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Warding Bond',
+      name: game.i18n.localize('Effects.WardingBond'),
       description:
         'Adds 1 to AC and saving throws and grants resistance to all damage for 1 hour',
       icon: 'icons/magic/defensive/shield-barrier-flaming-diamond-blue-yellow.webp',
@@ -2780,7 +2833,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _waterBreathing() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Water Breathing',
+      name: game.i18n.localize('Effects.WaterBreathing'),
       description: 'No active effects and lasts for 24 hours',
       icon: 'icons/magic/water/pseudopod-swirl-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_DAY,
@@ -2789,7 +2842,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _waterWalk() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Water Walk',
+      name: game.i18n.localize('Effects.WaterWalk'),
       description: 'No active effects and lasts for 1 hour',
       icon: 'icons/creatures/slimes/slime-movement-swirling-blue.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -2799,7 +2852,7 @@ export default class EffectDefinitionsDnd5e {
   /** Class specific */
   get _bardicInspiration() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Bardic Inspiration',
+      name: game.i18n.localize('Effects.BardicInspiration'),
       description:
         'Add a dice to a single ability check, attack roll, or saving throw in the next 10 minutes',
       icon: 'icons/skills/melee/unarmed-punch-fist.webp',
@@ -2815,7 +2868,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _bardicInspirationD6() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Bardic Inspiration (d6)',
+      name: game.i18n.localize('Effects.BardicInspirationD6'),
       description: 'For bards from level 1 to level 4',
       icon: 'icons/skills/melee/unarmed-punch-fist.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2847,7 +2900,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _bardicInspirationD8() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Bardic Inspiration (d8)',
+      name: game.i18n.localize('Effects.BardicInspirationD8'),
       description: 'For bards from level 5 to level 9',
       icon: 'icons/skills/melee/unarmed-punch-fist.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2879,7 +2932,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _bardicInspirationD10() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Bardic Inspiration (d10)',
+      name: game.i18n.localize('Effects.BardicInspirationD10'),
       description: 'For bards from level 10 to level 14',
       icon: 'icons/skills/melee/unarmed-punch-fist.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2911,7 +2964,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _bardicInspirationD12() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Bardic Inspiration (d12)',
+      name: game.i18n.localize('Effects.BardicInspirationD12'),
       description: 'For bards from level 15 to level 20',
       icon: 'icons/skills/melee/unarmed-punch-fist.webp',
       isViewable: this._settings.showNestedEffects,
@@ -2943,7 +2996,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _channelDivinitySacredWeapon() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Channel Divinity: Sacred Weapon',
+      name: game.i18n.localize('Effects.ChannelDivinitySacredWeapon'),
       description:
         'Add charisma modifier (minimum +1) to all weapon attack rolls and emits 20/40 light for 1 minute (requires ATL)',
       icon: 'icons/weapons/swords/sword-gold-holy.webp',
@@ -2992,7 +3045,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _channelDivinityTurnTheUnholy() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Channel Divinity: Turn the Unholy',
+      name: game.i18n.localize('Effects.ChannelDivinityTurntheUnholy'),
       description:
         'No active effects and lasts for 1 minute. Expires on taking damage.',
       icon: 'icons/magic/fire/explosion-embers-evade-silhouette.webp',
@@ -3007,7 +3060,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _channelDivinityTurnUndead() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Channel Divinity: Turn Undead',
+      name: game.i18n.localize('Effects.ChannelDivinityTurnUndead'),
       description:
         'No active effects and lasts for 1 minute. Expires on taking damage.',
       icon: 'icons/magic/fire/flame-burning-creature-skeleton.webp',
@@ -3022,7 +3075,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _kiEmptyBody() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Ki: Empty Body',
+      name: game.i18n.localize('Effects.KiEmptyBody'),
       description:
         'Grants advantage on attack rolls, forces disadvantage to all who attack, and grants resistance to all damage except force for 1 minute',
       icon: 'icons/magic/perception/silhouette-stealth-shadow.webp',
@@ -3119,7 +3172,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _kiPatientDefense() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Ki: Patient Defense',
+      name: game.i18n.localize('Effects.PatientDefense'),
       description:
         'Grants disadvantage to all who attack and advantage on all dexterity saving throws until next turn',
       icon: 'icons/magic/defensive/shield-barrier-glowing-blue.webp',
@@ -3145,7 +3198,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _rage() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Rage',
+      name: game.i18n.localize('Effects.Rage'),
       description:
         'Advantage on strength checks and strength saving throws, a variable bonus to melee damage based on barbarian level, and resistance to piercing, bludgeoning, and slashing damage for 1 minute. Also handles Path of the Totem Warrior resistances.',
       icon: 'icons/creatures/abilities/mouth-teeth-human.webp',
@@ -3180,7 +3233,7 @@ export default class EffectDefinitionsDnd5e {
         {
           key: 'system.bonuses.mwak.damage',
           mode: CONST.ACTIVE_EFFECT_MODES.ADD,
-          value: '+ @scale.barbarian.rage',
+          value: '+ @scale.barbarian.rage-damage',
         },
         {
           key: 'macro.tokenMagic',
@@ -3193,7 +3246,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _recklessAttack() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Reckless Attack',
+      name: game.i18n.localize('Effects.RecklessAttack'),
       description:
         'Advantage on melee attacks for a turn and grants advantage to those who attack for 1 round',
       icon: 'icons/skills/melee/blade-tips-triple-bent-white.webp',
@@ -3211,7 +3264,7 @@ export default class EffectDefinitionsDnd5e {
       ],
       subEffects: [
         this._effectHelpers.createActiveEffect({
-          name: 'Reckless Attack (advantage on attacks)',
+          name: game.i18n.localize('Effects.RecklessAttackAdvantageOnAttacks'),
           description: 'Advantage on melee attacks until end of turn',
           icon: 'icons/skills/melee/blade-tips-triple-bent-white.webp',
           turns: 1,
@@ -3230,7 +3283,7 @@ export default class EffectDefinitionsDnd5e {
   /* Equipment effects */
   get _bullseyeLantern() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Bullseye Lantern',
+      name: game.i18n.localize('Effects.BullseyeLantern'),
       description:
         'Adds lantern light in a 60 degree cone for 6 hours (requires ATL)',
       icon: 'icons/sundries/lights/lantern-iron-yellow.webp',
@@ -3272,7 +3325,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _candle() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Candle',
+      name: game.i18n.localize('Effects.Candle'),
       description: 'Adds candle light for 1 hour (requires ATL)',
       icon: 'icons/sundries/lights/candle-unlit-white.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -3308,7 +3361,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _hoodedLantern() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Hooded Lantern',
+      name: game.i18n.localize('Effects.HoodedLantern'),
       description: 'Adds hooded lantern light for 6 hours (requires ATL)',
       icon: 'icons/sundries/lights/lantern-iron-yellow.webp',
       seconds: Constants.SECONDS.IN_SIX_HOURS,
@@ -3344,7 +3397,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _lantern() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Lantern',
+      name: game.i18n.localize('Effects.Lantern'),
       description: 'Adds lantern light for 6 hours (requires ATL)',
       icon: 'icons/sundries/lights/lantern-iron-yellow.webp',
       seconds: Constants.SECONDS.IN_SIX_HOURS,
@@ -3380,7 +3433,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _torch() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Torch',
+      name: game.i18n.localize('Effects.Torch'),
       description: 'Adds torch light for 1 hour (requires ATL)',
       icon: 'icons/sundries/lights/torch-black.webp',
       seconds: Constants.SECONDS.IN_ONE_HOUR,
@@ -3417,7 +3470,7 @@ export default class EffectDefinitionsDnd5e {
   /* Other effects */
   get _bonusAction() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Bonus Action',
+      name: game.i18n.localize('Effects.BonusAction'),
       description: 'No active effects and expires on turn start',
       icon: 'modules/dfreds-convenient-effects/images/bonus-action.svg',
       flags: {
@@ -3430,7 +3483,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _coverHalf() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Cover (Half)',
+      name: game.i18n.localize('Effects.CoverHalf'),
       description: 'Adds 2 to AC and dexterity saving throws',
       icon: 'modules/dfreds-convenient-effects/images/broken-wall.svg',
       tint: '#dae34f',
@@ -3451,7 +3504,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _coverThreeQuarters() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Cover (Three-Quarters)',
+      name: game.i18n.localize('Effects.CoverThreeQuarters'),
       description: 'Adds 5 to AC and dexterity saving throws',
       icon: 'modules/dfreds-convenient-effects/images/brick-wall.svg',
       changes: [
@@ -3471,7 +3524,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _coverTotal() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Cover (Total)',
+      name: game.i18n.localize('Effects.CoverTotal'),
       description: 'Causes all attacks to fail automatically',
       icon: 'modules/dfreds-convenient-effects/images/castle.svg',
       changes: [
@@ -3486,7 +3539,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _encumbered() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Encumbered',
+      name: game.i18n.localize('Effects.Encumbered'),
       description: 'Lowers movement by 10 ft.',
       icon: 'icons/svg/down.svg',
       changes: [
@@ -3502,7 +3555,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _dodge() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Dodge',
+      name: game.i18n.localize('Effects.Dodge'),
       description:
         'Grants disadvantage to all who attack and advantage on all dexterity saving throws until next turn',
       icon: 'modules/dfreds-convenient-effects/images/dodging.svg',
@@ -3528,7 +3581,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _flanked() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Flanked',
+      name: game.i18n.localize('Effects.Flanked'),
       description: 'Grants advantage to all who melee attack',
       icon: 'modules/dfreds-convenient-effects/images/encirclement.svg',
       changes: [
@@ -3548,7 +3601,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _flanking() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Flanking',
+      name: game.i18n.localize('Effects.Flanking'),
       description: 'Grants advantage on melee attack rolls',
       icon: 'icons/svg/sword.svg',
       changes: [
@@ -3568,7 +3621,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _greatWeaponMaster() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Great Weapon Master',
+      name: game.i18n.localize('Effects.GreatWeaponMaster'),
       description: 'Subtracts 5 from melee attacks but adds 10 to melee damage',
       icon: 'icons/skills/melee/hand-grip-staff-yellow-brown.webp',
       changes: [
@@ -3588,7 +3641,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _heavilyEncumbered() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Heavily Encumbered',
+      name: game.i18n.localize('Effects.HeavilyEncumbered'),
       description:
         'Lowers movement by 20 ft., disadvantage on all attack rolls, and disadvantage on strength, dexterity, and constitution saves',
       icon: 'icons/svg/downgrade.svg',
@@ -3625,7 +3678,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _inspiration() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Inspiration',
+      name: game.i18n.localize('Effects.Inspiration'),
       description:
         'Advantage on everything and expires after any action, save, check, or skill roll',
       icon: 'icons/magic/control/buff-luck-fortune-green.webp',
@@ -3646,7 +3699,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _rangedDisadvantage() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Ranged Disadvantage',
+      name: game.i18n.localize('Effects.RangedDisadvantage'),
       description: 'Disadvantage on ranged attack rolls',
       icon: 'modules/dfreds-convenient-effects/images/broken-arrow.svg',
       changes: [
@@ -3666,7 +3719,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _reaction() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Reaction',
+      name: game.i18n.localize('Effects.Reaction'),
       description: 'No active effects and expires on turn start',
       icon: 'modules/dfreds-convenient-effects/images/reaction.svg',
       flags: {
@@ -3679,7 +3732,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _ready() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Ready',
+      name: game.i18n.localize('Effects.Ready'),
       description: 'No active effects and expires on turn start',
       icon: 'modules/dfreds-convenient-effects/images/ready.svg',
       flags: {
@@ -3692,7 +3745,7 @@ export default class EffectDefinitionsDnd5e {
 
   get _sharpshooter() {
     return this._effectHelpers.createActiveEffect({
-      name: 'Sharpshooter',
+      name: game.i18n.localize('Effects.Sharpshooter'),
       description:
         'Subtracts 5 from ranged attacks but adds 10 to ranged damage',
       icon: 'icons/weapons/bows/shortbow-recurve-yellow.webp',

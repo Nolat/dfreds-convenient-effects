@@ -106,11 +106,11 @@ export default class EffectHandler {
 
     activeEffectsToApply.push(effect);
 
-    if (effect.name.startsWith('Exhaustion')) {
+    if (effect.name.startsWith(game.i18n.localize('Effects.Exhaustion'))) {
       await this._removeAllExhaustionEffects(uuid);
     }
 
-    if (effect.name == 'Unconscious') {
+    if (effect.name == game.i18n.localize('Effects.Unconscious')) {
       activeEffectsToApply.push(this._getProneEffect());
     }
 
@@ -147,16 +147,23 @@ export default class EffectHandler {
   }
 
   _getProneEffect() {
-    let proneActiveEffectData =
-      game.dfreds.effectInterface.findEffectByName('Prone');
+    let proneActiveEffectData = game.dfreds.effectInterface.findEffectByName(
+      game.i18n.localize('Effects.Prone')
+    );
     return proneActiveEffectData;
   }
 
   async _removeAllExhaustionEffects(uuid) {
-    await this.removeEffect({ effectName: 'Exhaustion 1', uuid });
-    await this.removeEffect({ effectName: 'Exhaustion 2', uuid });
-    await this.removeEffect({ effectName: 'Exhaustion 3', uuid });
-    await this.removeEffect({ effectName: 'Exhaustion 4', uuid });
-    await this.removeEffect({ effectName: 'Exhaustion 5', uuid });
+    var exhaustion = game.i18n.localize('Effects.Exhaustion');
+    await this.removeEffect({ effectName: exhaustion + ' 1', uuid });
+    await this.removeEffect({ effectName: exhaustion + ' 2', uuid });
+    await this.removeEffect({ effectName: exhaustion + ' 3', uuid });
+    await this.removeEffect({ effectName: exhaustion + ' 4', uuid });
+    await this.removeEffect({ effectName: exhaustion + ' 5', uuid });
+    await this.removeEffect({ effectName: exhaustion + ' 6', uuid });
+    await this.removeEffect({ effectName: exhaustion + ' 7', uuid });
+    await this.removeEffect({ effectName: exhaustion + ' 8', uuid });
+    await this.removeEffect({ effectName: exhaustion + ' 9', uuid });
+    await this.removeEffect({ effectName: exhaustion + ' 10', uuid });
   }
 }
